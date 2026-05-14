@@ -1,0 +1,17 @@
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\AlgorithmProcess.exe.config
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\AlgorithmProcess.exe
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\AlgorithmProcess.pdb
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.csproj.AssemblyReference.cache
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.Properties.Resources.resources
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.csproj.GenerateResource.cache
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.csproj.CoreCompileInputs.cache
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.exe
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.pdb
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\halcondotnetxl.dll
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\hdevenginedotnetxl.dll
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\Algorith.6E488B84.Up2Date
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.MainForm.resources
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\SunnyUI.Common.dll
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\SunnyUI.dll
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\SunnyUI.Common.xml
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.exe.config
