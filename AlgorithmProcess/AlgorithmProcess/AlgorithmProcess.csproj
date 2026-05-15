@@ -82,7 +82,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\AlgorithmModule.cs" />
     <Compile Include="Base\GrahpicsExtension.cs" />
     <Compile Include="Define\DefineClass.cs" />
     <Compile Include="Define\DefineStruct.cs" />
@@ -101,6 +100,24 @@
     <Compile Include="Module\ReadROIINI.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Window\DisplayResult.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Window\DisplayResult.Designer.cs">
+      <DependentUpon>DisplayResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Window\ImageCrop.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Window\ImageCrop.Designer.cs">
+      <DependentUpon>ImageCrop.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Window\ImageCropForTraining.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\ImageCropForTraining.Designer.cs">
+      <DependentUpon>ImageCropForTraining.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -113,6 +130,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Window\DisplayResult.resx">
+      <DependentUpon>DisplayResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\ImageCrop.resx">
+      <DependentUpon>ImageCrop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\ImageCropForTraining.resx">
+      <DependentUpon>ImageCropForTraining.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

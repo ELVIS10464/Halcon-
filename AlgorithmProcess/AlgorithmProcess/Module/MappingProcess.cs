@@ -14,11 +14,11 @@ namespace AlgorithmProcess
     {
         private readonly ImageConverter _ImageConverter = new ImageConverter();
         private HalconImageConverter HC = null;
-        private AlgorithmModule AM = null;
-        public void OnMappingForTwoCamera(string Imagepath, ROIList ROI)
+        //private AlgorithmModule AM = null;
+        public void OnMappingForTwoCamera(string Imagepath, ROIList ROI, MappingParameter MappingParameter)
         {
             HC = new HalconImageConverter();
-            AM = new AlgorithmModule();
+            //AM = new AlgorithmModule();
 
             for (int i = 20; i > 0; i--)
             {
@@ -35,7 +35,7 @@ namespace AlgorithmProcess
                     HC.Bitmap2HImage((Bitmap)Lbmp.Clone(), out _hImageLeft);
                     HC.Bitmap2HImage((Bitmap)Rbmp.Clone(), out _hImageRight);
 
-                    AlgorithmModule AM_Clone = AM.Clone();
+                    //AlgorithmModule AM_Clone = AM.Clone();
 
 
                 });

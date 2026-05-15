@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlgorithmProcess.Window;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -70,7 +71,7 @@ namespace AlgorithmProcess
             if (Directory.Exists(settingInfo.ImageParh))
             {
                 // 清除舊有的項目
-                Imagefile_lb.Items.Clear();
+                loadImagefile_lb.Items.Clear();
 
                 // 取得該路徑下的所有目錄資訊
                 DirectoryInfo d = new DirectoryInfo(settingInfo.ImageParh);
@@ -79,7 +80,7 @@ namespace AlgorithmProcess
                 foreach (DirectoryInfo folder in folders)
                 {
                     // 只將資料夾名稱（不含完整路徑）加入 ListBox
-                    Imagefile_lb.Items.Add(folder.Name);
+                    loadImagefile_lb.Items.Add(folder.Name);
                 }
                 LI.AddLog(Msg_RichTextBox, "INFO", "成功載入" + settingInfo.ImageParh);
             }
@@ -131,10 +132,10 @@ namespace AlgorithmProcess
 
         private void runalgorithm_btn_Click(object sender, EventArgs e)
         {
-            if (Imagefile_lb.SelectedItem != null)
+            if (loadImagefile_lb.SelectedItem != null)
             {
                 // 取得選取的文字
-                string selectedItem = Imagefile_lb.SelectedItem.ToString();
+                string selectedItem = loadImagefile_lb.SelectedItem.ToString();
                 LI.AddLog(Msg_RichTextBox, "INFO", $"當下選擇的項目是: {selectedItem}");
 
                 if (!_isLoadRecipe)
@@ -150,7 +151,7 @@ namespace AlgorithmProcess
                         // 兩相機
                         LI.AddLog(Msg_RichTextBox, "INFO", "Start Two Cameras Process");
 
-                        MP.OnMappingForTwoCamera(settingInfo.ImageParh + "\\" + selectedItem, rOIList);
+                        //MP.OnMappingForTwoCamera(settingInfo.ImageParh + "\\" + selectedItem, rOIList);
                     }
                     else if(switchmode_cb.SelectedIndex == 1)
                     {
@@ -183,6 +184,12 @@ namespace AlgorithmProcess
             {
                 LI.AddLog(Msg_RichTextBox, "WARNING", $"載入Recipe失敗: {ex.Message}");
             }
+        }
+
+        private void ImageCropforTraining_btn_Click(object sender, EventArgs e)
+        {
+            ImageCropForTraining ImageCropForTraining = new ImageCropForTraining();
+            ImageCropForTraining.ShowDialog();
         }
     }
 }

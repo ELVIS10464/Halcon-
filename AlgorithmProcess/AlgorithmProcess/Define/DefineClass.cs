@@ -90,12 +90,12 @@ namespace AlgorithmProcess
     public class ROIList
     {
         // 將不同相機模式分開，結構更清晰
-        public CameraModeThree ThreeCamera { get; set; } = new CameraModeThree();
-        public CameraModeTwo TwoCamera { get; set; } = new CameraModeTwo();
+        public ThreeCameraROI ThreeCamera { get; set; } = new ThreeCameraROI();
+        public TwoCameraROI TwoCamera { get; set; } = new TwoCameraROI();
     }
 
     // 三相機
-    public class CameraModeThree
+    public class ThreeCameraROI
     {
         public PanelROI CountSlice { get; set; } = new PanelROI();
         public PanelROI Stack { get; set; } = new PanelROI();
@@ -112,7 +112,7 @@ namespace AlgorithmProcess
     }
 
     // 兩相機
-    public class CameraModeTwo
+    public class TwoCameraROI
     {
         public PanelROI CountSlice { get; set; } = new PanelROI();
         public PanelROI Stack { get; set; } = new PanelROI();
@@ -175,5 +175,247 @@ namespace AlgorithmProcess
         public double[] projection_x = null;
 
         public double[] projection_y = null;
+    }
+
+
+    /// <summary>
+    /// 演算法參數設定
+    /// </summary>
+    public class MappingParameter
+    {
+        public ThreeCameraParameter ThreeCamera { get; set; } = new ThreeCameraParameter();
+        public TwoCameraParameter TwoCamera { get; set; } = new TwoCameraParameter();
+    }
+    public class ThreeCameraParameter
+    {
+        public CountSliceParameter CountSlice { get; set; } = new CountSliceParameter();
+        public StackParameter Stack { get; set; } = new StackParameter();
+        public ThicknessParameter Thickness { get; set; } = new ThicknessParameter();
+        public WarpageParameter Warpage { get; set; } = new WarpageParameter();
+        public GapParameter Gap { get; set; } = new GapParameter();
+        public StitchParameter Stitch { get; set; } = new StitchParameter();
+        public SaveSetting SaveSetting { get; set; } = new SaveSetting();
+        public AlgorithmByPass AlgorithmByPass { get; set; } = new AlgorithmByPass();
+    }
+    public class TwoCameraParameter
+    {
+        public CountSliceParameter CountSlice { get; set; } = new CountSliceParameter();
+        public StackParameter Stack { get; set; } = new StackParameter();
+        public ThicknessParameter Thickness { get; set; } = new ThicknessParameter();
+        public WarpageParameter Warpage { get; set; } = new WarpageParameter();
+        public StitchParameter Stitch { get; set; } = new StitchParameter();
+        public SaveSetting SaveSetting { get; set; } = new SaveSetting();
+        public AlgorithmByPass AlgorithmByPass { get; set; } = new AlgorithmByPass();
+    }
+    public class CountSliceParameter
+    {
+        public double L_Panel_threshold_value { get; set; } = 30;
+        public double R_Panel_threshold_value { get; set; } = 30;
+        public double ML_Panel_threshold_value { get; set; } = 30;
+        public double MR_Panel_threshold_value { get; set; } = 30;
+        public double L_ROI_MiddleRow_UpDistance { get; set; } = 35;
+        public double L_ROI_MiddleRow_DownDistance { get; set; } = 50;
+        public double R_ROI_MiddleRow_UpDistance { get; set; } = 40;
+        public double R_ROI_MiddleRow_DownDistance { get; set; } = 70;
+        public double L_Bar_threshold_value { get; set; } = 30;
+        public double R_Bar_threshold_value { get; set; } = 30;
+
+        public double Bar_Distance { get; set; } = 95;
+        public double Slant_ABS_Value { get; set; } = 0.035;
+        public double MinAmplitudeThreshold { get; set; } = 5;
+        public double CutPoint1 { get; set; } = 450;
+        public double CutPoint2 { get; set; } = 150;
+        public double ThresholdMin { get; set; } = 100;
+        public double ThresholdMax { get; set; } = 255;
+        public double ThresholdArea { get; set; } = 70;
+        public double LeftEdge_ThresholdMin { get; set; } = 0;
+        public double LeftEdge_ThresholdMax { get; set; } = 50;
+        public double RightEdge_ThresholdMin { get; set; } = 0;
+        public double RightEdge_ThresholdMax { get; set; } = 90;
+        public double LeftEdge_Area { get; set; } = 200;
+        public double RightEdge_Area { get; set; } = 200;
+    }
+    public class StackParameter
+    {
+        public double L_Panel_threshold_value { get; set; } = 30;
+        public double R_Panel_threshold_value { get; set; } = 30;
+        public double ML_Panel_threshold_value { get; set; } = 30;
+        public double MR_Panel_threshold_value { get; set; } = 30;
+        public double L_ROI_MiddleRow_UpDistance { get; set; } = 35;
+        public double L_ROI_MiddleRow_DownDistance { get; set; } = 50;
+        public double R_ROI_MiddleRow_UpDistance { get; set; } = 40;
+        public double R_ROI_MiddleRow_DownDistance { get; set; } = 70;
+        public double L_Bar_threshold_value { get; set; } = 30;
+        public double R_Bar_threshold_value { get; set; } = 30;
+
+        public double ChamferDistance { get; set; } = 15;
+        public double PanelDistance { get; set; } = 10;
+        public double Panel_threshold_value { get; set; } = 18;
+        public double Binarization_threshold_Min_value { get; set; } = 80;
+        public double Region_Width { get; set; } = 2;
+        public double Region_Area { get; set; } = 5;
+        public double MinAmplitudeThreshold { get; set; } = 5;
+        public double Diff1_threshold_value { get; set; } = 30;
+        public double Diff2_threshold_value { get; set; } = 30;
+        public double hSecVal_threshold_value { get; set; } = 2;
+        public double hDiffMiddleDis_threshold_value { get; set; } = 5;
+    }
+    public class ThicknessParameter
+    {
+        public double L_Panel_threshold_value { get; set; } = 30;
+        public double R_Panel_threshold_value { get; set; } = 30;
+        public double ML_Panel_threshold_value { get; set; } = 30;
+        public double MR_Panel_threshold_value { get; set; } = 30;
+        public double L_ROI_MiddleRow_UpDistance { get; set; } = 35;
+        public double L_ROI_MiddleRow_DownDistance { get; set; } = 50;
+        public double R_ROI_MiddleRow_UpDistance { get; set; } = 40;
+        public double R_ROI_MiddleRow_DownDistance { get; set; } = 70;
+        public double L_Bar_threshold_value { get; set; } = 30;
+        public double R_Bar_threshold_value { get; set; } = 30;
+
+        public double ChamferDistance { get; set; } = 10;
+        public double MinAmplitudeThreshold { get; set; } = 5;
+        public double PanelDistance { get; set; } = 10;
+        public double Scale { get; set; } = 115;
+    }
+    public class WarpageParameter
+    {
+        public double L_Panel_threshold_value { get; set; } = 30;
+        public double R_Panel_threshold_value { get; set; } = 30;
+        public double ML_Panel_threshold_value { get; set; } = 30;
+        public double MR_Panel_threshold_value { get; set; } = 30;
+        public double L_ROI_MiddleRow_UpDistance { get; set; } = 35;
+        public double L_ROI_MiddleRow_DownDistance { get; set; } = 50;
+        public double R_ROI_MiddleRow_UpDistance { get; set; } = 40;
+        public double R_ROI_MiddleRow_DownDistance { get; set; } = 70;
+        public double L_Bar_threshold_value { get; set; } = 30;
+        public double R_Bar_threshold_value { get; set; } = 30;
+
+        public double Binarization_threshold_Case1_Min { get; set; } = 0;
+        public double Binarization_threshold_Case1_Max { get; set; } = 100;
+        public double Casel_Area { get; set; } = 100;
+        public double Binarization_threshold_Case2_Min { get; set; } = 220;
+        public double Binarization_threshold_Case2_Max { get; set; } = 255;
+        public double Gray_threshold_value1 { get; set; } = 100;
+        public double Gray_threshold_value2 { get; set; } = 130;
+        public double White_Area { get; set; } = 250;
+        public double White_Mean { get; set; } = 150;
+        public double White_Width { get; set; } = 2;
+        public double White_Height { get; set; } = 15;
+        public double ScaleImage_Method1_Value { get; set; } = 3;
+        public double Emphasize_Method3_Value { get; set; } = 5;
+        public double Emphasize_Method4_Value { get; set; } = 2;
+        public double MinThicknessError { get; set; } = 6;
+        public double ChamferDistance { get; set; } = 10;
+        public double MinAmplitudeThreshold { get; set; } = 5;
+        public double Turn_ChamferDistance_threshold { get; set; } = 15;
+        public double Turn_ChamferDistance { get; set; } = 3;
+        public double Scale { get; set; } = 98;
+        public double ThresholdMin { get; set; } = 0;
+        public double ThresholdMax { get; set; } = 100;
+    }
+    public class GapParameter
+    {
+        public double L_Panel_threshold_value { get; set; } = 30;
+        public double R_Panel_threshold_value { get; set; } = 30;
+        public double ML_Panel_threshold_value { get; set; } = 30;
+        public double MR_Panel_threshold_value { get; set; } = 30;
+        public double L_ROI_MiddleRow_UpDistance { get; set; } = 35;
+        public double L_ROI_MiddleRow_DownDistance { get; set; } = 50;
+        public double R_ROI_MiddleRow_UpDistance { get; set; } = 40;
+        public double R_ROI_MiddleRow_DownDistance { get; set; } = 70;
+        public double L_Bar_threshold_value { get; set; } = 30;
+        public double R_Bar_threshold_value { get; set; } = 30;
+
+        public double Left_Bar_Slot_Row { get; set; } = 690;
+        public double Left_Bar_Slot_Col { get; set; } = 1040;
+        public double Right_Bar_Slot_Row { get; set; } = 667;
+        public double Right_Bar_Slot_Col { get; set; } = 890;
+        public double Left_HbarCol { get; set; } = 962;
+        public double Right_HbarCol { get; set; } = 966;
+        public double Left_Bar_Slot_Row_UpDistance { get; set; } = 15;
+        public double Left_Bar_Slot_Row_DownDistance { get; set; } = 0;
+        public double Left_HorEdgeCol_threshold_value { get; set; } = 10;
+        public double Right_Bar_Slot_Row_UpDistance { get; set; } = 20;
+        public double Right_Bar_Slot_Row_DownDistance { get; set; } = 0;
+        public double Right_HorEdgeCol_threshold_value { get; set; } = 0;
+
+
+        public double Binarization_threshold_Case1_Min { get; set; } = 0;
+        public double Binarization_threshold_Case1_Max { get; set; } = 100;
+        public double Case1_Area { get; set; } = 100;
+        public double Binarization_threshold_Case2_Min { get; set; } = 220;
+        public double Binarization_threshold_Case2_Max { get; set; } = 255;
+        public double Gray_threshold_value1 { get; set; } = 100;
+        public double Gray_threshold_value2 { get; set; } = 130;
+        public double White_Area { get; set; } = 250;
+        public double White_Mean { get; set; } = 150;
+        public double White_Width { get; set; } = 2;
+        public double White_Height { get; set; } = 15;
+        public double ScaleImage_Method1_Value { get; set; } = 3;
+        public double Emphasize_Method3_Value { get; set; } = 5;
+        public double Emphasize_Method4_Value { get; set; } = 2;
+        public double Scale { get; set; } = 98;
+    }
+    public class StitchParameter
+    {
+        public double SlotCount { get; set; } = 20;
+        public double SingleSlotRowOffset1 { get; set; } = 0;
+        public double SingleSlotRowOffset2 { get; set; } = -10;
+        public double SingleSlotColOverlap1 { get; set; } = 217;
+        public double SingleSlotColOverlap2 { get; set; } = 217;
+        public double AllSlotCropHeight { get; set; } = 720;
+        public double AllSlotNormalOverlap { get; set; } = 600;
+        public double AllSlotSlantOverlap { get; set; } = 420;
+
+        //public double[] AllSlotRowOverlap;
+        public double AllSlotRowOverlap1 { get; set; } = 0;
+        public double AllSlotRowOverlap2 { get; set; } = 0;
+        public double AllSlotRowOverlap3 { get; set; } = 0;
+        public double AllSlotRowOverlap4 { get; set; } = 0;
+        public double AllSlotRowOverlap5 { get; set; } = 0;
+        public double AllSlotRowOverlap6 { get; set; } = 0;
+        public double AllSlotRowOverlap7 { get; set; } = 0;
+        public double AllSlotRowOverlap8 { get; set; } = 0;
+        public double AllSlotRowOverlap9 { get; set; } = 0;
+        public double AllSlotRowOverlap10 { get; set; } = 0;
+        public double AllSlotRowOverlap11 { get; set; } = 0;
+        public double AllSlotRowOverlap12 { get; set; } = 0;
+        public double AllSlotRowOverlap13 { get; set; } = 0;
+        public double AllSlotRowOverlap14 { get; set; } = 0;
+        public double AllSlotRowOverlap15 { get; set; } = 0;
+        public double AllSlotRowOverlap16 { get; set; } = 0;
+        public double AllSlotRowOverlap17 { get; set; } = 0;
+        public double AllSlotRowOverlap18 { get; set; }  = 0;
+        public double AllSlotRowOverlap19 { get; set; } = 0;
+        public double AllSlotRowOverlap20 { get; set; } = 0;
+        public double AllSlotRowOverlap21 { get; set; } = 0;
+        public double AllSlotRowOverlap22 { get; set; } = 0;
+        public double AllSlotRowOverlap23 { get; set; } = 0;
+        public double AllSlotRowOverlap24 { get; set; } = 0;
+    }
+    public class SaveSetting
+    {
+        public bool SaveLeftCameraImage { get; set; } = true;
+        public bool SaveMiddleCameraImage { get; set; } = true;
+        public bool SaveRightCameraImage { get; set; } = true;
+        public bool SaveSingleSlotImage { get; set; } = true;
+        public bool SaveAllSlotImage { get; set; } = true;
+        public bool SaveRunTimeCsv { get; set; } = true;
+        public bool SaveSlotResultCsv { get; set; } = true;
+    }
+    public class AlgorithmByPass
+    {
+        public bool ByPassThicknessAlgorithm { get; set; } = false;
+        public bool ByPassWarpageAlgorithm { get; set; } = false;
+        public bool ByPassGapAlgorithm { get; set; } = false;
+
+
+        public bool Stack_isFindPanelPoint { get; set; } = true;
+        public bool Stack_isGrayProject { get; set; } = true;
+        public bool Stack_isThreshold { get; set; } = true;
+        public bool Stack_isCalculateOutlier { get; set; } = true;
+
+        public bool Thickness_isChamferCalculate { get; set; } = false;
     }
 }
