@@ -14,4 +14,10 @@ namespace AlgorithmProcess
         EmptySlices, // 無片
         Unknow // 未知片
     }
+
+    public enum ScaleArrow
+    {
+        Horizontal,
+        Vertical,
+    }
 }

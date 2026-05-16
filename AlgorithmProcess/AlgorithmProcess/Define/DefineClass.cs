@@ -9,7 +9,13 @@ namespace AlgorithmProcess
 {
     public class SettingInfo
     {
-        public string ImageParh = string.Empty;
+        public string LoadImagePath = string.Empty;
+        public string RecipePath = string.Empty;
+        public string SaveResultPath = string.Empty;
+
+        public int SlotNumber = 0;
+
+        public string DirImagePath = string.Empty;
     }
 
     public class FoupGlassFeature

@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace AlgorithmProcess.Window
 {
-    public partial class DisplayResult : UserControl
+    public partial class FromDisplayResult : UserControl
     {
-        public DisplayResult()
+        public FromDisplayResult()
         {
             InitializeComponent();
         }

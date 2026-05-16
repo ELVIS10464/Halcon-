@@ -82,6 +82,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\CustomPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Base\GrahpicsExtension.cs" />
     <Compile Include="Define\DefineClass.cs" />
     <Compile Include="Define\DefineStruct.cs" />
@@ -96,27 +99,21 @@
     <Compile Include="Base\IniManager.cs" />
     <Compile Include="Module\LogInfo.cs" />
     <Compile Include="Module\MappingProcess.cs" />
-    <Compile Include="Module\ReadINI.cs" />
+    <Compile Include="Module\ReadDefaultINI.cs" />
     <Compile Include="Module\ReadROIINI.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Window\DisplayResult.cs">
+    <Compile Include="Window\FromDisplayResult.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Window\DisplayResult.Designer.cs">
-      <DependentUpon>DisplayResult.cs</DependentUpon>
+    <Compile Include="Window\FromDisplayResult.Designer.cs">
+      <DependentUpon>FromDisplayResult.cs</DependentUpon>
     </Compile>
-    <Compile Include="Window\ImageCrop.cs">
+    <Compile Include="Window\FromImageCrop.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Window\ImageCrop.Designer.cs">
-      <DependentUpon>ImageCrop.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Window\ImageCropForTraining.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Window\ImageCropForTraining.Designer.cs">
-      <DependentUpon>ImageCropForTraining.cs</DependentUpon>
+    <Compile Include="Window\FromImageCrop.Designer.cs">
+      <DependentUpon>FromImageCrop.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -130,14 +127,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Window\DisplayResult.resx">
-      <DependentUpon>DisplayResult.cs</DependentUpon>
+    <EmbeddedResource Include="Window\FromDisplayResult.resx">
+      <DependentUpon>FromDisplayResult.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Window\ImageCrop.resx">
-      <DependentUpon>ImageCrop.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Window\ImageCropForTraining.resx">
-      <DependentUpon>ImageCropForTraining.cs</DependentUpon>
+    <EmbeddedResource Include="Window\FromImageCrop.resx">
+      <DependentUpon>FromImageCrop.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

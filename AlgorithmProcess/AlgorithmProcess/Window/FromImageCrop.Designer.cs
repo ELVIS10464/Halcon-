@@ -1,6 +1,6 @@
 ﻿namespace AlgorithmProcess.Window
 {
-    partial class ImageCrop
+    partial class FromImageCrop
     {
         /// <summary> 
         /// 設計工具所需的變數。
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImageCrop));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FromImageCrop));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.nextimage_btn = new System.Windows.Forms.Button();
@@ -84,8 +84,11 @@
             this.presence_btn = new System.Windows.Forms.Button();
             this.absence_btn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.SelectSlot_cb = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.roiswitch_cb = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -154,6 +157,7 @@
             this.nextimage_btn.Size = new System.Drawing.Size(52, 798);
             this.nextimage_btn.TabIndex = 3;
             this.nextimage_btn.UseVisualStyleBackColor = true;
+            this.nextimage_btn.Click += new System.EventHandler(this.Btn_ClickEvent);
             // 
             // tabControl1
             // 
@@ -627,22 +631,29 @@
             this.lastimage_btn.Size = new System.Drawing.Size(51, 798);
             this.lastimage_btn.TabIndex = 2;
             this.lastimage_btn.UseVisualStyleBackColor = true;
+            this.lastimage_btn.Click += new System.EventHandler(this.Btn_ClickEvent);
             // 
             // tableLayoutPanel_menu
             // 
-            this.tableLayoutPanel_menu.ColumnCount = 7;
-            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.22222F));
-            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
-            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
-            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
-            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
-            this.tableLayoutPanel_menu.Controls.Add(this.stack_btn, 6, 0);
-            this.tableLayoutPanel_menu.Controls.Add(this.slant_btn, 5, 0);
-            this.tableLayoutPanel_menu.Controls.Add(this.presence_btn, 4, 0);
-            this.tableLayoutPanel_menu.Controls.Add(this.absence_btn, 3, 0);
-            this.tableLayoutPanel_menu.Controls.Add(this.label2, 2, 0);
+            this.tableLayoutPanel_menu.ColumnCount = 9;
+            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.142857F));
+            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.142857F));
+            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.142857F));
+            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.142857F));
+            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_menu.Controls.Add(this.stack_btn, 8, 0);
+            this.tableLayoutPanel_menu.Controls.Add(this.slant_btn, 7, 0);
+            this.tableLayoutPanel_menu.Controls.Add(this.presence_btn, 6, 0);
+            this.tableLayoutPanel_menu.Controls.Add(this.absence_btn, 5, 0);
+            this.tableLayoutPanel_menu.Controls.Add(this.label2, 4, 0);
+            this.tableLayoutPanel_menu.Controls.Add(this.SelectSlot_cb, 3, 0);
+            this.tableLayoutPanel_menu.Controls.Add(this.label3, 2, 0);
             this.tableLayoutPanel_menu.Controls.Add(this.roiswitch_cb, 1, 0);
             this.tableLayoutPanel_menu.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel_menu.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -656,10 +667,11 @@
             // stack_btn
             // 
             this.stack_btn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stack_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.stack_btn.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stack_btn.Location = new System.Drawing.Point(1699, 3);
+            this.stack_btn.Location = new System.Drawing.Point(1776, 3);
             this.stack_btn.Name = "stack_btn";
-            this.stack_btn.Size = new System.Drawing.Size(210, 78);
+            this.stack_btn.Size = new System.Drawing.Size(133, 78);
             this.stack_btn.TabIndex = 7;
             this.stack_btn.Text = "Stack";
             this.stack_btn.UseVisualStyleBackColor = true;
@@ -667,10 +679,11 @@
             // slant_btn
             // 
             this.slant_btn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.slant_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.slant_btn.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.slant_btn.Location = new System.Drawing.Point(1487, 3);
+            this.slant_btn.Location = new System.Drawing.Point(1640, 3);
             this.slant_btn.Name = "slant_btn";
-            this.slant_btn.Size = new System.Drawing.Size(206, 78);
+            this.slant_btn.Size = new System.Drawing.Size(130, 78);
             this.slant_btn.TabIndex = 6;
             this.slant_btn.Text = "Slant";
             this.slant_btn.UseVisualStyleBackColor = true;
@@ -678,10 +691,11 @@
             // presence_btn
             // 
             this.presence_btn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.presence_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.presence_btn.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.presence_btn.Location = new System.Drawing.Point(1275, 3);
+            this.presence_btn.Location = new System.Drawing.Point(1504, 3);
             this.presence_btn.Name = "presence_btn";
-            this.presence_btn.Size = new System.Drawing.Size(206, 78);
+            this.presence_btn.Size = new System.Drawing.Size(130, 78);
             this.presence_btn.TabIndex = 5;
             this.presence_btn.Text = "Presence";
             this.presence_btn.UseVisualStyleBackColor = true;
@@ -689,10 +703,11 @@
             // absence_btn
             // 
             this.absence_btn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.absence_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.absence_btn.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.absence_btn.Location = new System.Drawing.Point(1063, 3);
+            this.absence_btn.Location = new System.Drawing.Point(1368, 3);
             this.absence_btn.Name = "absence_btn";
-            this.absence_btn.Size = new System.Drawing.Size(206, 78);
+            this.absence_btn.Size = new System.Drawing.Size(130, 78);
             this.absence_btn.TabIndex = 4;
             this.absence_btn.Text = "Absence";
             this.absence_btn.UseVisualStyleBackColor = true;
@@ -701,46 +716,76 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("標楷體", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label2.Location = new System.Drawing.Point(639, 0);
+            this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label2.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label2.Location = new System.Drawing.Point(1095, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(418, 84);
+            this.label2.Size = new System.Drawing.Size(267, 84);
             this.label2.TabIndex = 3;
             this.label2.Text = "Classification";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // SelectSlot_cb
+            // 
+            this.SelectSlot_cb.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SelectSlot_cb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SelectSlot_cb.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SelectSlot_cb.FormattingEnabled = true;
+            this.SelectSlot_cb.Items.AddRange(new object[] {
+            "Recipe ROI",
+            "Custom ROI"});
+            this.SelectSlot_cb.Location = new System.Drawing.Point(822, 3);
+            this.SelectSlot_cb.Name = "SelectSlot_cb";
+            this.SelectSlot_cb.Size = new System.Drawing.Size(267, 40);
+            this.SelectSlot_cb.TabIndex = 9;
+            this.SelectSlot_cb.SelectedIndexChanged += new System.EventHandler(this.SelectSlot_cb_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label3.Font = new System.Drawing.Font("標楷體", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label3.Location = new System.Drawing.Point(549, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(267, 84);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Select Slot";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // roiswitch_cb
             // 
             this.roiswitch_cb.Dock = System.Windows.Forms.DockStyle.Fill;
             this.roiswitch_cb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.roiswitch_cb.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.roiswitch_cb.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.roiswitch_cb.FormattingEnabled = true;
             this.roiswitch_cb.Items.AddRange(new object[] {
             "Recipe ROI",
             "Custom ROI"});
-            this.roiswitch_cb.Location = new System.Drawing.Point(321, 3);
+            this.roiswitch_cb.Location = new System.Drawing.Point(276, 3);
             this.roiswitch_cb.Name = "roiswitch_cb";
-            this.roiswitch_cb.Size = new System.Drawing.Size(312, 34);
+            this.roiswitch_cb.Size = new System.Drawing.Size(267, 40);
             this.roiswitch_cb.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Font = new System.Drawing.Font("標楷體", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label1.Font = new System.Drawing.Font("標楷體", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(312, 84);
+            this.label1.Size = new System.Drawing.Size(267, 84);
             this.label1.TabIndex = 1;
             this.label1.Text = "ROI Switch";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ImageCrop
+            // FromImageCrop
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "ImageCrop";
+            this.Name = "FromImageCrop";
             this.Size = new System.Drawing.Size(1918, 900);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
@@ -829,5 +874,8 @@
         private System.Windows.Forms.Button stack_btn;
         private System.Windows.Forms.Button slant_btn;
         private System.Windows.Forms.Button presence_btn;
+        private System.Windows.Forms.ComboBox SelectSlot_cb;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }

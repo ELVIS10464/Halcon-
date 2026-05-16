@@ -15,9 +15,16 @@ namespace AlgorithmProcess
 {
     public partial class MainForm : Form
     {
+        // =============================== 視窗介面中的UserControl ===============================
+        private FromDisplayResult fromDisplayResult = null;
+
+        private FromImageCrop fromImageCrop = null;
+        // =============================== 視窗介面中的UserControl ===============================
+
+
         // =============================== function建立 ===============================
 
-        private ReadINI RI = new ReadINI();
+        private ReadDefaultINI RI = new ReadDefaultINI();
 
         private ReadROIINI RRI = new ReadROIINI();
 
@@ -30,6 +37,7 @@ namespace AlgorithmProcess
         //private AlgorithmModule AM = null;
 
         // =============================== function建立 ===============================
+
 
         // =============================== 自定義設定檔路徑位置 ===============================
 
@@ -44,6 +52,7 @@ namespace AlgorithmProcess
         // =============================== 自定義設定檔路徑位置 ===============================
 
         // =============================== 全域變數宣告 ===============================
+        private List<Button> BtnList = new List<Button>();
 
         private SettingInfo settingInfo = null;
 
@@ -56,25 +65,26 @@ namespace AlgorithmProcess
         public MainForm()
         {
             InitializeComponent();
-            InitializeImageList();
-            InitializeGUI();
+            InitializeDefaultPathSetting(); //預設影像、儲存與Recipe路徑
+            InitializeMainForm();
+            //InitializeGUI();
             InitializeState();
         }
 
-        private void InitializeImageList()
+        private void InitializeDefaultPathSetting()
         {
             settingInfo = new SettingInfo();
 
-            settingInfo = RI.ReadRecipeINI(SettingPath);
+            settingInfo = RI.ReadINI(SettingPath);
 
-            // 檢查路徑是否存在，避免程式崩潰
-            if (Directory.Exists(settingInfo.ImageParh))
+            // LoadImagePath
+            if (Directory.Exists(settingInfo.LoadImagePath))
             {
                 // 清除舊有的項目
                 loadImagefile_lb.Items.Clear();
 
                 // 取得該路徑下的所有目錄資訊
-                DirectoryInfo d = new DirectoryInfo(settingInfo.ImageParh);
+                DirectoryInfo d = new DirectoryInfo(settingInfo.LoadImagePath);
                 DirectoryInfo[] folders = d.GetDirectories();
 
                 foreach (DirectoryInfo folder in folders)
@@ -82,91 +92,137 @@ namespace AlgorithmProcess
                     // 只將資料夾名稱（不含完整路徑）加入 ListBox
                     loadImagefile_lb.Items.Add(folder.Name);
                 }
-                LI.AddLog(Msg_RichTextBox, "INFO", "成功載入" + settingInfo.ImageParh);
+                
+                LI.AddLog(Msg_RichTextBox, "INFO", "成功載入" + settingInfo.LoadImagePath);
+
+                loadimagepath_tb.Text = settingInfo.LoadImagePath;
+            }
+            else
+            {
+                LI.AddLog(Msg_RichTextBox, "WARNING", "找不到指定的路徑！");
+            }
+
+            // RecipePath
+            if (Directory.Exists(settingInfo.RecipePath))
+            {
+                LI.AddLog(Msg_RichTextBox, "INFO", "成功載入" + settingInfo.RecipePath);
+
+                recipename_tb.Text = settingInfo.RecipePath;
+            }
+            else
+            {
+                LI.AddLog(Msg_RichTextBox, "WARNING", "找不到指定的路徑！");
+            }
+
+            // SaveResultPath
+            if (Directory.Exists(settingInfo.SaveResultPath))
+            {
+                // 清除舊有的項目
+                saveImagefile_lb.Items.Clear();
+
+                // 取得該路徑下的所有目錄資訊
+                DirectoryInfo d = new DirectoryInfo(settingInfo.SaveResultPath);
+                DirectoryInfo[] folders = d.GetDirectories();
+
+                foreach (DirectoryInfo folder in folders)
+                {
+                    // 只將資料夾名稱（不含完整路徑）加入 ListBox
+                    saveImagefile_lb.Items.Add(folder.Name);
+                }
+                
+                LI.AddLog(Msg_RichTextBox, "INFO", "成功載入" + settingInfo.SaveResultPath);
+
+                saveimagepath_tb.Text = settingInfo.SaveResultPath;
             }
             else
             {
                 LI.AddLog(Msg_RichTextBox, "WARNING", "找不到指定的路徑！");
             }
         }
-        private void InitializeGUI()
+
+        private void InitializeMainForm()
         {
-            GF = new GenerateFoup();
-            GF._IsFoupInitialFinish = false;
-            GF._IsDrawGlass = true;
+            fromDisplayResult = new FromDisplayResult();
+            fromDisplayResult.Dock = DockStyle.Fill;
+            main_panel.Controls.Add(fromDisplayResult);
 
-            GF.ReadFoupImage(Foup20Path);
+            fromImageCrop = new FromImageCrop();
+            fromImageCrop.Dock = DockStyle.Fill;
+            main_panel.Controls.Add(fromImageCrop);
 
-            Bitmap FoupImage = GF.DrawFoupGlass(-1);
-
-            Foup_PictureBox.Image = (Bitmap)FoupImage.Clone();
-
-            GF._IsFoupInitialFinish = true;
+            fromDisplayResult.BringToFront();
         }
+        //private void InitializeGUI()
+        //{
+        //    GF = new GenerateFoup();
+        //    GF._IsFoupInitialFinish = false;
+        //    GF._IsDrawGlass = true;
+
+        //    GF.ReadFoupImage(Foup20Path);
+
+        //    Bitmap FoupImage = GF.DrawFoupGlass(-1);
+
+        //    Foup_PictureBox.Image = (Bitmap)FoupImage.Clone();
+
+        //    GF._IsFoupInitialFinish = true;
+        //}
 
         private void InitializeState()
         {
-            switchmode_cb.SelectedIndex = 0;
-            runmode_cb.SelectedIndex = 0;
+            BtnList = new List<Button> { home_btn, ImageCropData_btn};
         }
 
-        private void loadimage_btn_Click(object sender, EventArgs e)
+        private void Btn_ClickEvent(object sender, EventArgs e)
         {
-            using (FolderBrowserDialog fbd = new FolderBrowserDialog())
+            var btn = sender as Button;
+            if (btn == home_btn)
             {
-                fbd.Description = "請選擇目標資料夾";
-                fbd.ShowNewFolderButton = true; // 允許建立新資料夾
-
-                if (fbd.ShowDialog() == DialogResult.OK)
-                {
-                    string folderPath = fbd.SelectedPath;
-
-                    settingInfo.ImageParh = folderPath;
-
-                    RI.WriteRecipeINI(SettingPath, settingInfo);
-
-                    LI.AddLog(Msg_RichTextBox, "INFO", "切換圖片路徑" + settingInfo.ImageParh);
-                }
+                fromDisplayResult.BringToFront();
+            }
+            else if (btn == ImageCropData_btn)
+            {                
+                fromImageCrop.BringToFront();
             }
         }
 
-        private void runalgorithm_btn_Click(object sender, EventArgs e)
-        {
-            if (loadImagefile_lb.SelectedItem != null)
-            {
-                // 取得選取的文字
-                string selectedItem = loadImagefile_lb.SelectedItem.ToString();
-                LI.AddLog(Msg_RichTextBox, "INFO", $"當下選擇的項目是: {selectedItem}");
 
-                if (!_isLoadRecipe)
-                {
-                    LI.AddLog(Msg_RichTextBox, "WARNING", "請先載入Recipe");
-                }
-                else
-                {
-                    MP = new MappingProcess();
+        //private void runalgorithm_btn_Click(object sender, EventArgs e)
+        //{
+        //    if (loadImagefile_lb.SelectedItem != null)
+        //    {
+        //        // 取得選取的文字
+        //        string selectedItem = loadImagefile_lb.SelectedItem.ToString();
+        //        LI.AddLog(Msg_RichTextBox, "INFO", $"當下選擇的項目是: {selectedItem}");
 
-                    if (switchmode_cb.SelectedIndex == 0)
-                    {
-                        // 兩相機
-                        LI.AddLog(Msg_RichTextBox, "INFO", "Start Two Cameras Process");
+        //        if (!_isLoadRecipe)
+        //        {
+        //            LI.AddLog(Msg_RichTextBox, "WARNING", "請先載入Recipe");
+        //        }
+        //        else
+        //        {
+        //            MP = new MappingProcess();
 
-                        //MP.OnMappingForTwoCamera(settingInfo.ImageParh + "\\" + selectedItem, rOIList);
-                    }
-                    else if(switchmode_cb.SelectedIndex == 1)
-                    {
-                        // 三相機
-                        LI.AddLog(Msg_RichTextBox, "INFO", "Start Three Cameras Process");
+        //            if (switchmode_cb.SelectedIndex == 0)
+        //            {
+        //                // 兩相機
+        //                LI.AddLog(Msg_RichTextBox, "INFO", "Start Two Cameras Process");
 
-                        MP.OnMappingForThreeCamera(settingInfo.ImageParh + "\\" + selectedItem, rOIList);
-                    }
-                }                                    
-            }
-            else
-            {
-                LI.AddLog(Msg_RichTextBox, "WARNING", "尚未選擇任何項目");
-            }
-        }
+        //                //MP.OnMappingForTwoCamera(settingInfo.ImageParh + "\\" + selectedItem, rOIList);
+        //            }
+        //            else if(switchmode_cb.SelectedIndex == 1)
+        //            {
+        //                // 三相機
+        //                LI.AddLog(Msg_RichTextBox, "INFO", "Start Three Cameras Process");
+
+        //                MP.OnMappingForThreeCamera(settingInfo.ImageParh + "\\" + selectedItem, rOIList);
+        //            }
+        //        }                                    
+        //    }
+        //    else
+        //    {
+        //        LI.AddLog(Msg_RichTextBox, "WARNING", "尚未選擇任何項目");
+        //    }
+        //}
 
         private void selectrecipe_btn_Click(object sender, EventArgs e)
         {
@@ -186,10 +242,24 @@ namespace AlgorithmProcess
             }
         }
 
-        private void ImageCropforTraining_btn_Click(object sender, EventArgs e)
+        private void changesetting_btn_Click(object sender, EventArgs e)
         {
-            ImageCropForTraining ImageCropForTraining = new ImageCropForTraining();
-            ImageCropForTraining.ShowDialog();
+
+        }
+
+        private void loadImagefile_lb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // 1. 安全檢查：防範使用者點到空白處導致 Index 為 -1
+            if (loadImagefile_lb.SelectedIndex == -1) return;
+
+            // 2. 取得選取項目的資訊 (根據你塞進 ListBox 的內容調整)
+            // 狀況 A：如果你的 ListBox 裡面塞的是「單純的圖片檔名或完整路徑」
+            string selectedImageItem = loadImagefile_lb.SelectedItem.ToString();
+
+            settingInfo.DirImagePath = settingInfo.LoadImagePath + "\\" + selectedImageItem + "\\Image";
+
+            // 3. *** 關鍵步驟：直接呼叫 UserControl 的公開方法，把路徑丟過去 ***
+            fromImageCrop.InitializeImageLoad(settingInfo);
         }
     }
 }

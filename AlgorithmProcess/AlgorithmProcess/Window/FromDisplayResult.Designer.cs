@@ -1,6 +1,6 @@
 ﻿namespace AlgorithmProcess.Window
 {
-    partial class DisplayResult
+    partial class FromDisplayResult
     {
         /// <summary> 
         /// 設計工具所需的變數。
@@ -275,12 +275,12 @@
             this.stitch_tabPage.Text = "Stitch";
             this.stitch_tabPage.UseVisualStyleBackColor = true;
             // 
-            // DisplayResult
+            // FromDisplayResult
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "DisplayResult";
+            this.Name = "FromDisplayResult";
             this.Size = new System.Drawing.Size(1918, 1318);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel_menu.ResumeLayout(false);

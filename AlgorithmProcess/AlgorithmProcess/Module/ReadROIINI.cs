@@ -255,7 +255,7 @@ namespace AlgorithmProcess
         {
             iniManager = new IniManager(INIPath);
 
-            iniManager.WriteIniFile("BaseConfig", "ImagePath", settingInfo.ImageParh);
+            //iniManager.WriteIniFile("BaseConfig", "ImagePath", settingInfo.ImageParh);
         }
     }
 }
