@@ -14,6 +14,9 @@ namespace AlgorithmProcess
         public delegate void CallBackReturnShowMenu(CustomPictureBox pic);
         public event CallBackReturnShowMenu CallBackShowMenu;
 
+        // 📢 新增：當 ROI 列表數據有任何變動（新增、刪除、滑鼠拖曳調整）時觸發此事件
+        public event EventHandler RoiListChanged;
+
         private float _zoom = 1.0f;
         private PointF _pan = PointF.Empty;
         private float _fitZoom = 1.0f;
@@ -201,6 +204,7 @@ namespace AlgorithmProcess
                 RoiList.Add(roiImageRect);
                 ActiveRoiIndex = RoiList.Count - 1;
 
+                RoiListChanged?.Invoke(this, EventArgs.Empty);
                 return;
             }
                 
@@ -218,6 +222,8 @@ namespace AlgorithmProcess
             {
                 RoiList.Add(imgRect);
                 ActiveRoiIndex = RoiList.Count - 1;
+
+                RoiListChanged?.Invoke(this, EventArgs.Empty);
             }
             Invalidate();
         }
@@ -240,6 +246,21 @@ namespace AlgorithmProcess
                     ActiveRoiIndex = RoiList.Count - 1;
                 Invalidate();
             }
+        }
+
+        public void ClearRoi()
+        {
+            // 直接清空整個 List，免去迴圈的麻煩與陷阱
+            RoiList.Clear();
+
+            // 索引歸零
+            ActiveRoiIndex = -1;
+
+            // 📢 關鍵：通知外部的 DataGridView 數據變更（變為 0 筆）
+            RoiListChanged?.Invoke(this, EventArgs.Empty);
+
+            // 重新繪製畫布（框就會消失）
+            Invalidate();
         }
 
         private Rectangle ImageRectToScreenRect(Rectangle imgRect)
@@ -379,6 +400,8 @@ namespace AlgorithmProcess
                 if (imgRect.Width > 0 && imgRect.Height > 0)
                 {
                     RoiList[ActiveRoiIndex] = imgRect;
+
+                    RoiListChanged?.Invoke(this, EventArgs.Empty);
                 }
 
                 Invalidate();

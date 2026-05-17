@@ -38,12 +38,18 @@ namespace AlgorithmProcess
 
         // =============================== function建立 ===============================
 
+        // =============================== 事件與委託 ===============================
+
+        public delegate void CallBackReturnLog(LogInfo LI);
+        public event CallBackReturnLog CallBackLog;
+
+        // =============================== 事件與委託 ===============================
 
         // =============================== 自定義設定檔路徑位置 ===============================
 
         private static string RootPath = "C:\\AlgorithmRecipe";
 
-        private string ROIPath = RootPath + "\\ROI.ini";
+        //private string ROIPath = RootPath + "\\ROI.ini";
 
         private string SettingPath = RootPath + "\\Setting.ini";
 
@@ -150,6 +156,8 @@ namespace AlgorithmProcess
             fromImageCrop.Dock = DockStyle.Fill;
             main_panel.Controls.Add(fromImageCrop);
 
+            fromImageCrop.CallBackLog += OnFromImageCropLogReceived;
+
             fromDisplayResult.BringToFront();
         }
         //private void InitializeGUI()
@@ -224,27 +232,15 @@ namespace AlgorithmProcess
         //    }
         //}
 
-        private void selectrecipe_btn_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                rOIList = new ROIList();
-
-                rOIList = RRI.ReadRecipeINI(ROIPath, 2);
-
-                _isLoadRecipe = true;
-
-                LI.AddLog(Msg_RichTextBox, "INFO", $"載入Recipe成功");
-            }
-            catch (Exception ex)
-            {
-                LI.AddLog(Msg_RichTextBox, "WARNING", $"載入Recipe失敗: {ex.Message}");
-            }
-        }
-
         private void changesetting_btn_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void OnFromImageCropLogReceived(string type, string msg)
+        {
+            // 這裡可以直接呼叫 MainForm 的方法來更新 Log
+            LI.AddLog(Msg_RichTextBox, type, msg);
         }
 
         private void loadImagefile_lb_SelectedIndexChanged(object sender, EventArgs e)
@@ -253,7 +249,6 @@ namespace AlgorithmProcess
             if (loadImagefile_lb.SelectedIndex == -1) return;
 
             // 2. 取得選取項目的資訊 (根據你塞進 ListBox 的內容調整)
-            // 狀況 A：如果你的 ListBox 裡面塞的是「單純的圖片檔名或完整路徑」
             string selectedImageItem = loadImagefile_lb.SelectedItem.ToString();
 
             settingInfo.DirImagePath = settingInfo.LoadImagePath + "\\" + selectedImageItem + "\\Image";

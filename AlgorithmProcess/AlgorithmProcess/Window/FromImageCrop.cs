@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sunny.UI.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +20,16 @@ namespace AlgorithmProcess.Window
 
         private readonly ImageConverter _ImageConverter = new ImageConverter();
 
+        private ReadROIINI RRI = null;
+
         // =============================== function建立 ===============================
+
+        // =============================== 事件與委託 ===============================
+
+        public delegate void CallBackReturnLog(string type, string msg);
+        public event CallBackReturnLog CallBackLog;
+
+        // =============================== 事件與委託 ===============================
 
         // =============================== 視窗CustomPictureBox建立 ===============================
         CustomPictureBox picThreeLeft = new CustomPictureBox
@@ -53,6 +63,8 @@ namespace AlgorithmProcess.Window
 
         private SettingInfo settingInfo = null;
 
+        private ROIList rOIList = null;
+
         private List<string> SlotList = new List<string>();
 
         private List<string> CameraLocation = new List<string>() { "Left", "Middle", "Right" };
@@ -65,7 +77,8 @@ namespace AlgorithmProcess.Window
         {
             InitializeComponent();
             InitializePictureBox(); //視窗CustomPictureBox事件綁定
-            InitializeImageLoad(settingInfo);
+            InitializeImageLoad(settingInfo); // 初始化圖片載入
+            InitializeDataGridViewStyle(); // 初始化 DataGridView 的外觀
         }
 
 
@@ -78,7 +91,7 @@ namespace AlgorithmProcess.Window
             };
 
             picThreeLeft.CallBackShowMenu += new CustomPictureBox.CallBackReturnShowMenu(OnCallBackShowMenu);
-
+            picThreeLeft.RoiListChanged += (s, e) => RefreshRoiDataGridView(picThreeLeft, threeleft_dgv);
             threeleft_panel.Controls.Add(picThreeLeft);
 
             //ThreeMiddle
@@ -88,7 +101,7 @@ namespace AlgorithmProcess.Window
             };
 
             picThreeMiddle.CallBackShowMenu += new CustomPictureBox.CallBackReturnShowMenu(OnCallBackShowMenu);
-
+            picThreeMiddle.RoiListChanged += (s, e) => RefreshRoiDataGridView(picThreeMiddle, threemiddle_dgv);
             threemiddle_panel.Controls.Add(picThreeMiddle);
 
             //ThreeRight
@@ -98,7 +111,7 @@ namespace AlgorithmProcess.Window
             };
 
             picThreeRight.CallBackShowMenu += new CustomPictureBox.CallBackReturnShowMenu(OnCallBackShowMenu);
-
+            picThreeRight.RoiListChanged += (s, e) => RefreshRoiDataGridView(picThreeRight, threeright_dgv);
             threeright_panel.Controls.Add(picThreeRight);
 
             //TwoLeft
@@ -108,7 +121,7 @@ namespace AlgorithmProcess.Window
             };
 
             picTwoLeft.CallBackShowMenu += new CustomPictureBox.CallBackReturnShowMenu(OnCallBackShowMenu);
-
+            picTwoLeft.RoiListChanged += (s, e) => RefreshRoiDataGridView(picTwoLeft, twoleft_dgv);
             twoleft_panel.Controls.Add(picTwoLeft);
 
             //TwoRight
@@ -118,8 +131,35 @@ namespace AlgorithmProcess.Window
             };
 
             picTwoRight.CallBackShowMenu += new CustomPictureBox.CallBackReturnShowMenu(OnCallBackShowMenu);
-
+            picTwoRight.RoiListChanged += (s, e) => RefreshRoiDataGridView(picTwoRight, tworight_dgv);
             tworight_panel.Controls.Add(picTwoRight);
+        }
+
+        /// <summary>
+        /// 一次性初始化所有 DataGridView 的欄位與樣式
+        /// </summary>
+        private void InitializeDataGridViewStyle()
+        {
+            // 5 個 DataGridView，名稱對應
+            var dgvList = new List<DataGridView> { threeleft_dgv, threemiddle_dgv, threeright_dgv, twoleft_dgv, tworight_dgv };
+
+            foreach (var dgv in dgvList)
+            {
+                if (dgv == null) continue;
+                dgv.Columns.Clear();
+                dgv.RowHeadersVisible = false;
+                dgv.AllowUserToAddRows = false;
+                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dgv.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+                // 建立 ROI 的 4 個核心幾何欄位
+                dgv.Columns.Add("No", "No.");
+                dgv.Columns.Add("X", "X");
+                dgv.Columns.Add("Y", "Y");
+                dgv.Columns.Add("W", "Width");
+                dgv.Columns.Add("H", "Height");
+            }
         }
 
         public void InitializeImageLoad(SettingInfo settingInfo)
@@ -169,8 +209,8 @@ namespace AlgorithmProcess.Window
                             SelectSlot_cb.SelectedIndex = 0;
                         }
                     }));
-                });   
-                
+                });
+
                 ImageIndex = 1;
                 ShowImage();
             }
@@ -288,8 +328,8 @@ namespace AlgorithmProcess.Window
             {
                 ImageIndex--; // 簡寫：同等於 ImageIndex = ImageIndex - 1;
                 ShowImage();
-                
-                lastimage_btn.Visible = (ImageIndex != 1);                
+
+                lastimage_btn.Visible = (ImageIndex != 1);
                 nextimage_btn.Visible = true;
             }
             else if (btn == nextimage_btn && ImageIndex < settingInfo.SlotNumber)
@@ -297,7 +337,7 @@ namespace AlgorithmProcess.Window
                 ImageIndex++; // 簡寫：同等於 ImageIndex = ImageIndex + 1;
                 ShowImage();
 
-                nextimage_btn.Visible = (ImageIndex != settingInfo.SlotNumber);               
+                nextimage_btn.Visible = (ImageIndex != settingInfo.SlotNumber);
                 lastimage_btn.Visible = true;
             }
         }
@@ -371,9 +411,128 @@ namespace AlgorithmProcess.Window
             }
         }
 
-        private void ShowROIData()
+        /// <summary>
+        /// ROI 改變時，動態更新對應的 DataGridView
+        /// </summary>
+        private void RefreshRoiDataGridView(CustomPictureBox pictureBox, DataGridView dgv)
         {
+            if (dgv == null) return;
 
+            if (dgv.InvokeRequired)
+            {
+                dgv.BeginInvoke(new Action(() => RefreshRoiDataGridView(pictureBox, dgv)));
+                return;
+            }
+
+            var roiList = pictureBox.RoiList;
+
+            // 狀況 A：如果數量不對（例如新增或刪除 ROI），直接重新建構所有 Rows
+            if (dgv.Rows.Count != roiList.Count)
+            {
+                dgv.Rows.Clear(); // 這裡不會噴錯了
+                for (int i = 0; i < roiList.Count; i++)
+                {
+                    Rectangle rect = roiList[i];
+                    // 序號, X, Y, Width, Height
+                    dgv.Rows.Add(i + 1, rect.X, rect.Y, rect.Width, rect.Height);
+                }
+            }
+            // 狀況 B：數量一樣（通常是滑鼠在拖曳、縮放 ROI），只更新數值，不重造 Row
+            else
+            {
+                for (int i = 0; i < roiList.Count; i++)
+                {
+                    Rectangle rect = roiList[i];
+
+                    // 假設你的欄位順序是：Index 0=序號, 1=X, 2=Y, 3=Width, 4=Height
+                    // 我們只更新數值變動的 Cells，這樣拉動時極度流暢、完全不卡頓
+                    dgv.Rows[i].Cells[1].Value = rect.X;
+                    dgv.Rows[i].Cells[2].Value = rect.Y;
+                    dgv.Rows[i].Cells[3].Value = rect.Width;
+                    dgv.Rows[i].Cells[4].Value = rect.Height;
+                }
+            }
+        }
+
+        private void roiswitch_cb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.settingInfo == null)
+            {
+                CallBackLog?.Invoke("WARNING", $"先選擇檔案");
+                return;
+            }
+            ClearAllROI();
+
+            int index = roiswitch_cb.SelectedIndex;            
+
+            if (index >= 0 && index < roiswitch_cb.Items.Count)
+            {
+                try
+                {
+                    RRI = new ReadROIINI();
+
+                    rOIList = new ROIList();
+
+                    string[] files = Directory.GetFiles(settingInfo.DirImagePath, $"*Middle*", SearchOption.TopDirectoryOnly);
+
+                    if (files.Length > 0)
+                    {
+                        rOIList = RRI.ReadRecipeINI(settingInfo.RecipePath + "\\ROI.ini", 3);
+
+                        var roiMap = new Dictionary<string, List<Rectangle>>();
+
+                        if (index == 0) //CountSlice
+                        {
+                            roiMap = rOIList.ThreeCamera.CountSlice.GetMappedRectangles();
+                        }
+                        else if (index == 1) //Stack
+                        {
+                            roiMap = rOIList.ThreeCamera.Stack.GetMappedRectangles();
+                        }
+
+                        foreach (var rect in roiMap["Left"]) picThreeLeft.AddRoi(rect);
+                        foreach (var rect in roiMap["Middle"]) picThreeMiddle.AddRoi(rect);
+                        foreach (var rect in roiMap["Right"]) picThreeRight.AddRoi(rect);
+
+
+                    }
+                    else
+                    {
+                        rOIList = RRI.ReadRecipeINI(settingInfo.RecipePath + "\\ROI.ini", 2);
+
+                        var roiMap = new Dictionary<string, List<Rectangle>>();
+
+                        if (index == 0) //CountSlice
+                        {
+                            roiMap = rOIList.TwoCamera.CountSlice.GetMappedRectangles();
+                        }
+                        else if (index == 1) //Stack
+                        {
+                            roiMap = rOIList.TwoCamera.Stack.GetMappedRectangles();
+                        }
+
+                        foreach (var rect in roiMap["Left"]) picTwoLeft.AddRoi(rect);
+                        foreach (var rect in roiMap["Right"]) picTwoRight.AddRoi(rect);
+                    }
+
+                    CallBackLog?.Invoke("INFO", $"載入Recipe成功");                    
+                }
+                catch (Exception ex)
+                {
+                    CallBackLog?.Invoke("WARNING", $"載入Recipe失敗: {ex.Message}");
+                }
+            }
+        }
+
+        private void ClearAllROI()
+        {
+            // 直接呼叫 ClearRoi()，一行搞定一台
+            picThreeLeft.ClearRoi();
+            picThreeMiddle.ClearRoi();
+            picThreeRight.ClearRoi();
+
+            picTwoLeft.ClearRoi();
+            picTwoRight.ClearRoi();
         }
     }
 }

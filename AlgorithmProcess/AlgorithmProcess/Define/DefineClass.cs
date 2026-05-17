@@ -147,6 +147,45 @@ namespace AlgorithmProcess
         // HBarPanel
         public ROI LeftImage_HBarPanel { get; set; } = new ROI();
         public ROI RightImage_HBarPanel { get; set; } = new ROI();
+
+        // 💡 新增：自動將內部的所有 ROI 依照名稱關鍵字分類，並轉換成 Rectangle
+        public Dictionary<string, List<Rectangle>> GetMappedRectangles()
+        {
+            var map = new Dictionary<string, List<Rectangle>>
+        {
+            { "Left", new List<Rectangle>() },
+            { "Middle", new List<Rectangle>() },
+            { "Right", new List<Rectangle>() }
+        };
+
+            // 收集所有屬性與它們對應的相機標籤
+            var allRois = new[]
+            {
+            new { Roi = LeftImage_Panel, Cam = "Left" },
+            new { Roi = LeftImage_EdgePanel, Cam = "Left" },
+            new { Roi = LeftImage_HBarPanel, Cam = "Left" },
+
+            new { Roi = RightImage_Panel, Cam = "Right" },
+            new { Roi = RightImage_EdgePanel, Cam = "Right" },
+            new { Roi = RightImage_HBarPanel, Cam = "Right" },
+
+            new { Roi = MiddleImage_LeftPanel, Cam = "Middle" },
+            new { Roi = MiddleImage_RightPanel, Cam = "Middle" }
+        };
+
+            foreach (var item in allRois)
+            {
+                var roi = item.Roi;
+                // 驗證是否有值
+                if (roi != null && roi.C2 > roi.C1 && roi.R2 > roi.R1)
+                {
+                    Rectangle rect = new Rectangle(roi.C1, roi.R1, roi.C2 - roi.C1, roi.R2 - roi.R1);
+                    map[item.Cam].Add(rect);
+                }
+            }
+
+            return map;
+        }
     }
 
 
@@ -392,7 +431,7 @@ namespace AlgorithmProcess
         public double AllSlotRowOverlap15 { get; set; } = 0;
         public double AllSlotRowOverlap16 { get; set; } = 0;
         public double AllSlotRowOverlap17 { get; set; } = 0;
-        public double AllSlotRowOverlap18 { get; set; }  = 0;
+        public double AllSlotRowOverlap18 { get; set; } = 0;
         public double AllSlotRowOverlap19 { get; set; } = 0;
         public double AllSlotRowOverlap20 { get; set; } = 0;
         public double AllSlotRowOverlap21 { get; set; } = 0;

@@ -175,7 +175,6 @@
             this.selectrecipe_btn.TabIndex = 4;
             this.selectrecipe_btn.Text = "Select Recipe";
             this.selectrecipe_btn.UseVisualStyleBackColor = true;
-            this.selectrecipe_btn.Click += new System.EventHandler(this.selectrecipe_btn_Click);
             // 
             // processstep_btn
             // 
