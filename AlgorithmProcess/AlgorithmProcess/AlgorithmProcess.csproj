@@ -115,6 +115,12 @@
     <Compile Include="Window\FromImageCrop.Designer.cs">
       <DependentUpon>FromImageCrop.cs</DependentUpon>
     </Compile>
+    <Compile Include="Window\FromParameterSetting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Window\FromParameterSetting.Designer.cs">
+      <DependentUpon>FromParameterSetting.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -132,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Window\FromImageCrop.resx">
       <DependentUpon>FromImageCrop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\FromParameterSetting.resx">
+      <DependentUpon>FromParameterSetting.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

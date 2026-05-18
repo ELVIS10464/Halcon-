@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
 
 namespace AlgorithmProcess.Window
 {
@@ -320,7 +321,7 @@ namespace AlgorithmProcess.Window
             ShowImage();
         }
 
-        private void Btn_ClickEvent(object sender, EventArgs e)
+        private void ImageSwitchBtn_ClickEvent(object sender, EventArgs e)
         {
             var btn = sender as Button;
 
@@ -409,6 +410,11 @@ namespace AlgorithmProcess.Window
                 picTwoRight.Image = (Bitmap)RightImage.Clone();
                 picTwoRight.FitWindow();
             }
+
+            if(roiswitch_cb.SelectedIndex >= 0)
+            {
+                roiswitch_cb_SelectedIndexChanged(roiswitch_cb, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -463,7 +469,7 @@ namespace AlgorithmProcess.Window
             }
             ClearAllROI();
 
-            int index = roiswitch_cb.SelectedIndex;            
+            int index = roiswitch_cb.SelectedIndex;
 
             if (index >= 0 && index < roiswitch_cb.Items.Count)
             {
@@ -493,8 +499,6 @@ namespace AlgorithmProcess.Window
                         foreach (var rect in roiMap["Left"]) picThreeLeft.AddRoi(rect);
                         foreach (var rect in roiMap["Middle"]) picThreeMiddle.AddRoi(rect);
                         foreach (var rect in roiMap["Right"]) picThreeRight.AddRoi(rect);
-
-
                     }
                     else
                     {
@@ -515,7 +519,7 @@ namespace AlgorithmProcess.Window
                         foreach (var rect in roiMap["Right"]) picTwoRight.AddRoi(rect);
                     }
 
-                    CallBackLog?.Invoke("INFO", $"載入Recipe成功");                    
+                    CallBackLog?.Invoke("INFO", $"載入Recipe成功");
                 }
                 catch (Exception ex)
                 {
@@ -533,6 +537,110 @@ namespace AlgorithmProcess.Window
 
             picTwoLeft.ClearRoi();
             picTwoRight.ClearRoi();
+        }
+
+        private void SaveBtn_ClickEvent(object sender, EventArgs e)
+        {
+            string SavePath = "";
+
+            var btn = sender as Button;
+
+            if (btn == absence_btn)
+            {
+                if (!Directory.Exists(settingInfo.SaveResultPath + "\\Absence"))
+                {
+                    Directory.CreateDirectory(settingInfo.SaveResultPath + "\\Absence"); // 自動建立多層級資料夾
+                }
+                SavePath = settingInfo.SaveResultPath + "\\Absence\\Slot" + ImageIndex.ToString("D2") + "_";
+
+                CallBackLog?.Invoke("INFO", $"儲存影像類別: Absence");
+            }
+            else if (btn == stack_btn)
+            {
+                if (!Directory.Exists(settingInfo.SaveResultPath + "\\Stack"))
+                {
+                    Directory.CreateDirectory(settingInfo.SaveResultPath + "\\Stack"); // 自動建立多層級資料夾
+                }
+                SavePath = settingInfo.SaveResultPath + "\\Stack\\Slot" + ImageIndex.ToString("D2") + "_";
+
+                CallBackLog?.Invoke("INFO", $"儲存影像類別: Stack");
+            }
+            else if (btn == presence_btn)
+            {
+                if (!Directory.Exists(settingInfo.SaveResultPath + "\\Presence"))
+                {
+                    Directory.CreateDirectory(settingInfo.SaveResultPath + "\\Presence"); // 自動建立多層級資料夾
+                }
+                SavePath = settingInfo.SaveResultPath + "\\Presence\\Slot" + ImageIndex.ToString("D2") + "_";
+
+                CallBackLog?.Invoke("INFO", $"儲存影像類別: Presence");
+            }
+            else if (btn == slant_btn)
+            {
+                if (!Directory.Exists(settingInfo.SaveResultPath + "\\Slant"))
+                {
+                    Directory.CreateDirectory(settingInfo.SaveResultPath + "\\Slant"); // 自動建立多層級資料夾
+                }
+                SavePath = settingInfo.SaveResultPath + "\\Slant\\Slot" + ImageIndex.ToString("D2") + "_";
+
+                CallBackLog?.Invoke("INFO", $"儲存影像類別: Slant");
+            }
+
+            SaveBitmapSafe(picTwoLeft, "Left", SavePath, ImageFormat.Bmp);
+            SaveBitmapSafe(picTwoRight, "Right", SavePath, ImageFormat.Bmp);
+            SaveBitmapSafe(picThreeLeft, "Left", SavePath, ImageFormat.Bmp);
+            SaveBitmapSafe(picThreeMiddle, "Middle", SavePath, ImageFormat.Bmp);
+            SaveBitmapSafe(picThreeRight, "Right", SavePath, ImageFormat.Bmp);
+
+            ImageSwitchBtn_ClickEvent(nextimage_btn, EventArgs.Empty);
+        }
+
+        private void SaveBitmapSafe(CustomPictureBox pic, string Location, string SavePath, ImageFormat format)
+        {
+            // 檢查是否有選取的 ROI
+            if (pic.ActiveRoiIndex >= 0 && pic.ActiveRoiIndex < pic.RoiList.Count)
+            {
+                // 檢查圖像是否存在
+                if (pic.Image != null)
+                {
+                    // 💡 為了效能，先把來源影像轉成 Bitmap（在迴圈外宣告一次就好）
+                    using (Bitmap srcBitmap = new Bitmap(pic.Image))
+                    {
+                        for (int i = 0; i < pic.RoiList.Count; i++)
+                        {
+                            // 💡 修正 1：依據迴圈的 i，依序取得不同的 ROI 框
+                            Rectangle roi = pic.RoiList[i];
+
+                            // 防呆：確保矩形寬高合法
+                            if (roi.Width <= 0 || roi.Height <= 0) continue;
+
+                            // 💡 修正 2：使用 using 包覆裁剪出來的圖片，確保一做完立刻釋放記憶體控制代碼
+                            using (Bitmap croppedImage = srcBitmap.Clone(roi, srcBitmap.PixelFormat))
+                            {
+                                string fullPath = SavePath + Location + "_" + (i + 1).ToString("D2") + ".bmp";
+
+                                // 💡 修正 3：使用安全儲存方法，繞過 GDI+ 底層的路徑鎖定 Bug
+                                if (croppedImage == null) return;
+
+                                // 先確認資料夾是否存在
+                                string dir = Path.GetDirectoryName(fullPath);
+                                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
+                                {
+                                    Directory.CreateDirectory(dir);
+                                }
+
+                                // 利用記憶體串流避開 GDI+ 直接操作檔案產生的泛型錯誤
+                                using (MemoryStream ms = new MemoryStream())
+                                {
+                                    croppedImage.Save(ms, ImageFormat.Bmp);
+                                    byte[] imageBytes = ms.ToArray();
+                                    File.WriteAllBytes(fullPath, imageBytes); // 徹底由 .NET 核心寫入，絕對不會噴 GDI+ 錯誤
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

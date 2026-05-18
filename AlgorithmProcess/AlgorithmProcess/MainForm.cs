@@ -253,6 +253,8 @@ namespace AlgorithmProcess
 
             settingInfo.DirImagePath = settingInfo.LoadImagePath + "\\" + selectedImageItem + "\\Image";
 
+            OnFromImageCropLogReceived("INFO", $"選擇的影像資料夾: {selectedImageItem}");
+
             // 3. *** 關鍵步驟：直接呼叫 UserControl 的公開方法，把路徑丟過去 ***
             fromImageCrop.InitializeImageLoad(settingInfo);
         }
