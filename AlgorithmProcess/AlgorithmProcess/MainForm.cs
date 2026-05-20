@@ -19,6 +19,8 @@ namespace AlgorithmProcess
         private FromDisplayResult fromDisplayResult = null;
 
         private FromImageCrop fromImageCrop = null;
+
+        private FromParameterSetting fromParameterSetting = null;
         // =============================== 視窗介面中的UserControl ===============================
 
 
@@ -28,10 +30,12 @@ namespace AlgorithmProcess
 
         private ReadROIINI RRI = new ReadROIINI();
 
+        private ReadAlgorithmParameterINI RAPI = new ReadAlgorithmParameterINI();
+
         private LogInfo LI = new LogInfo();
 
         private GenerateFoup GF = null;
-        
+
         private MappingProcess MP = null;
 
         //private AlgorithmModule AM = null;
@@ -40,8 +44,8 @@ namespace AlgorithmProcess
 
         // =============================== 事件與委託 ===============================
 
-        public delegate void CallBackReturnLog(LogInfo LI);
-        public event CallBackReturnLog CallBackLog;
+        //public delegate void CallBackReturnLog(LogInfo LI);
+        //public event CallBackReturnLog CallBackLog;
 
         // =============================== 事件與委託 ===============================
 
@@ -60,9 +64,7 @@ namespace AlgorithmProcess
         // =============================== 全域變數宣告 ===============================
         private List<Button> BtnList = new List<Button>();
 
-        private SettingInfo settingInfo = null;
-
-        private ROIList rOIList = null;
+        private SettingInfo settingInfo = null;     
 
         private bool _isLoadRecipe = false;
 
@@ -98,7 +100,7 @@ namespace AlgorithmProcess
                     // 只將資料夾名稱（不含完整路徑）加入 ListBox
                     loadImagefile_lb.Items.Add(folder.Name);
                 }
-                
+
                 LI.AddLog(Msg_RichTextBox, "INFO", "成功載入" + settingInfo.LoadImagePath);
 
                 loadimagepath_tb.Text = settingInfo.LoadImagePath;
@@ -135,7 +137,7 @@ namespace AlgorithmProcess
                     // 只將資料夾名稱（不含完整路徑）加入 ListBox
                     saveImagefile_lb.Items.Add(folder.Name);
                 }
-                
+
                 LI.AddLog(Msg_RichTextBox, "INFO", "成功載入" + settingInfo.SaveResultPath);
 
                 saveimagepath_tb.Text = settingInfo.SaveResultPath;
@@ -155,8 +157,12 @@ namespace AlgorithmProcess
             fromImageCrop = new FromImageCrop();
             fromImageCrop.Dock = DockStyle.Fill;
             main_panel.Controls.Add(fromImageCrop);
+            fromImageCrop.CallBackLog += OnLogReceived;
 
-            fromImageCrop.CallBackLog += OnFromImageCropLogReceived;
+            fromParameterSetting = new FromParameterSetting();
+            fromParameterSetting.Dock = DockStyle.Fill;
+            main_panel.Controls.Add(fromParameterSetting);
+            fromParameterSetting.CallBackLog += OnLogReceived;
 
             fromDisplayResult.BringToFront();
         }
@@ -177,7 +183,7 @@ namespace AlgorithmProcess
 
         private void InitializeState()
         {
-            BtnList = new List<Button> { home_btn, ImageCropData_btn};
+            RAPI.CallBackLog += OnLogReceived;
         }
 
         private void Btn_ClickEvent(object sender, EventArgs e)
@@ -188,8 +194,12 @@ namespace AlgorithmProcess
                 fromDisplayResult.BringToFront();
             }
             else if (btn == ImageCropData_btn)
-            {                
+            {
                 fromImageCrop.BringToFront();
+            }
+            else if (btn == parameter_btn)
+            {
+                fromParameterSetting.BringToFront();
             }
         }
 
@@ -237,7 +247,7 @@ namespace AlgorithmProcess
 
         }
 
-        private void OnFromImageCropLogReceived(string type, string msg)
+        private void OnLogReceived(string type, string msg)
         {
             // 這裡可以直接呼叫 MainForm 的方法來更新 Log
             LI.AddLog(Msg_RichTextBox, type, msg);
@@ -253,10 +263,12 @@ namespace AlgorithmProcess
 
             settingInfo.DirImagePath = settingInfo.LoadImagePath + "\\" + selectedImageItem + "\\Image";
 
-            OnFromImageCropLogReceived("INFO", $"選擇的影像資料夾: {selectedImageItem}");
+            OnLogReceived("INFO", $"選擇的影像資料夾: {selectedImageItem}");
 
             // 3. *** 關鍵步驟：直接呼叫 UserControl 的公開方法，把路徑丟過去 ***
             fromImageCrop.InitializeImageLoad(settingInfo);
+
+            fromParameterSetting.InitializeImageLoad(settingInfo);
         }
     }
 }

@@ -31,23 +31,23 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.AlgorithmDisplay = new System.Windows.Forms.TabPage();
-            this.ParameterSetting = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel_background = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel_menu = new System.Windows.Forms.TableLayoutPanel();
-            this.label3 = new System.Windows.Forms.Label();
+            this.runprocess_btn = new System.Windows.Forms.Button();
+            this.saveparameter_btn = new System.Windows.Forms.Button();
+            this.selectprocess_cb = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SelectSlot_cb = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.tableLayoutPanel_Main = new System.Windows.Forms.TableLayoutPanel();
             this.algorithmdisplay_panel = new System.Windows.Forms.Panel();
             this.algorithmstep = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
-            this.selectprocess_cb = new System.Windows.Forms.ComboBox();
-            this.saveparameter_btn = new System.Windows.Forms.Button();
-            this.runprocess_btn = new System.Windows.Forms.Button();
             this.tableLayoutPanel_Under = new System.Windows.Forms.TableLayoutPanel();
             this.test_btn = new System.Windows.Forms.Button();
             this.apply_btn = new System.Windows.Forms.Button();
+            this.ParameterSetting = new System.Windows.Forms.TabPage();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.AlgorithmDisplay.SuspendLayout();
@@ -90,16 +90,6 @@
             this.AlgorithmDisplay.Text = "AlgorithmDisplay";
             this.AlgorithmDisplay.UseVisualStyleBackColor = true;
             // 
-            // ParameterSetting
-            // 
-            this.ParameterSetting.Location = new System.Drawing.Point(4, 35);
-            this.ParameterSetting.Name = "ParameterSetting";
-            this.ParameterSetting.Padding = new System.Windows.Forms.Padding(3);
-            this.ParameterSetting.Size = new System.Drawing.Size(1910, 861);
-            this.ParameterSetting.TabIndex = 1;
-            this.ParameterSetting.Text = "ParameterSetting";
-            this.ParameterSetting.UseVisualStyleBackColor = true;
-            // 
             // tableLayoutPanel_background
             // 
             this.tableLayoutPanel_background.ColumnCount = 1;
@@ -140,18 +130,61 @@
             this.tableLayoutPanel_menu.Size = new System.Drawing.Size(1898, 79);
             this.tableLayoutPanel_menu.TabIndex = 0;
             // 
-            // label3
+            // runprocess_btn
             // 
-            this.label3.AutoSize = true;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label3.Font = new System.Drawing.Font("標楷體", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label3.Location = new System.Drawing.Point(3, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(310, 79);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Select Slot";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.runprocess_btn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.runprocess_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.runprocess_btn.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.runprocess_btn.Location = new System.Drawing.Point(1583, 3);
+            this.runprocess_btn.Name = "runprocess_btn";
+            this.runprocess_btn.Size = new System.Drawing.Size(312, 73);
+            this.runprocess_btn.TabIndex = 14;
+            this.runprocess_btn.Text = "Run Process";
+            this.runprocess_btn.UseVisualStyleBackColor = true;
+            this.runprocess_btn.Click += new System.EventHandler(this.runprocess_btn_Click);
+            // 
+            // saveparameter_btn
+            // 
+            this.saveparameter_btn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.saveparameter_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.saveparameter_btn.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveparameter_btn.Location = new System.Drawing.Point(1267, 3);
+            this.saveparameter_btn.Name = "saveparameter_btn";
+            this.saveparameter_btn.Size = new System.Drawing.Size(310, 73);
+            this.saveparameter_btn.TabIndex = 13;
+            this.saveparameter_btn.Text = "Save Parameter";
+            this.saveparameter_btn.UseVisualStyleBackColor = true;
+            // 
+            // selectprocess_cb
+            // 
+            this.selectprocess_cb.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.selectprocess_cb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.selectprocess_cb.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.selectprocess_cb.FormattingEnabled = true;
+            this.selectprocess_cb.Items.AddRange(new object[] {
+            "CountSlice",
+            "Stack",
+            "Thickness",
+            "Warpage",
+            "Gap"});
+            this.selectprocess_cb.Location = new System.Drawing.Point(951, 3);
+            this.selectprocess_cb.Name = "selectprocess_cb";
+            this.selectprocess_cb.Size = new System.Drawing.Size(310, 40);
+            this.selectprocess_cb.TabIndex = 12;
+            this.selectprocess_cb.SelectedIndexChanged += new System.EventHandler(this.selectprocess_cb_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label1.Font = new System.Drawing.Font("標楷體", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label1.Location = new System.Drawing.Point(635, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(310, 79);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Select Process";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // SelectSlot_cb
             // 
@@ -167,6 +200,19 @@
             this.SelectSlot_cb.Size = new System.Drawing.Size(310, 40);
             this.SelectSlot_cb.TabIndex = 10;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label3.Font = new System.Drawing.Font("標楷體", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label3.Location = new System.Drawing.Point(3, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(310, 79);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Select Slot";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // tableLayoutPanel_Main
             // 
             this.tableLayoutPanel_Main.ColumnCount = 2;
@@ -179,12 +225,13 @@
             this.tableLayoutPanel_Main.Name = "tableLayoutPanel_Main";
             this.tableLayoutPanel_Main.RowCount = 1;
             this.tableLayoutPanel_Main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_Main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_Main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 678F));
             this.tableLayoutPanel_Main.Size = new System.Drawing.Size(1898, 678);
             this.tableLayoutPanel_Main.TabIndex = 1;
             // 
             // algorithmdisplay_panel
             // 
+            this.algorithmdisplay_panel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.algorithmdisplay_panel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.algorithmdisplay_panel.Location = new System.Drawing.Point(3, 3);
             this.algorithmdisplay_panel.Name = "algorithmdisplay_panel";
@@ -221,60 +268,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label1.Font = new System.Drawing.Font("標楷體", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label1.Location = new System.Drawing.Point(635, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(310, 79);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "Select Process";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // selectprocess_cb
-            // 
-            this.selectprocess_cb.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.selectprocess_cb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.selectprocess_cb.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.selectprocess_cb.FormattingEnabled = true;
-            this.selectprocess_cb.Items.AddRange(new object[] {
-            "CountSlice",
-            "Stack",
-            "Thickness",
-            "Warpage",
-            "Gap"});
-            this.selectprocess_cb.Location = new System.Drawing.Point(951, 3);
-            this.selectprocess_cb.Name = "selectprocess_cb";
-            this.selectprocess_cb.Size = new System.Drawing.Size(310, 40);
-            this.selectprocess_cb.TabIndex = 12;
-            // 
-            // saveparameter_btn
-            // 
-            this.saveparameter_btn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.saveparameter_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.saveparameter_btn.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveparameter_btn.Location = new System.Drawing.Point(1267, 3);
-            this.saveparameter_btn.Name = "saveparameter_btn";
-            this.saveparameter_btn.Size = new System.Drawing.Size(310, 73);
-            this.saveparameter_btn.TabIndex = 13;
-            this.saveparameter_btn.Text = "Save Parameter";
-            this.saveparameter_btn.UseVisualStyleBackColor = true;
-            // 
-            // runprocess_btn
-            // 
-            this.runprocess_btn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.runprocess_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.runprocess_btn.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.runprocess_btn.Location = new System.Drawing.Point(1583, 3);
-            this.runprocess_btn.Name = "runprocess_btn";
-            this.runprocess_btn.Size = new System.Drawing.Size(312, 73);
-            this.runprocess_btn.TabIndex = 14;
-            this.runprocess_btn.Text = "Run Process";
-            this.runprocess_btn.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel_Under
             // 
@@ -315,6 +308,16 @@
             this.apply_btn.TabIndex = 15;
             this.apply_btn.Text = "Apply";
             this.apply_btn.UseVisualStyleBackColor = true;
+            // 
+            // ParameterSetting
+            // 
+            this.ParameterSetting.Location = new System.Drawing.Point(4, 35);
+            this.ParameterSetting.Name = "ParameterSetting";
+            this.ParameterSetting.Padding = new System.Windows.Forms.Padding(3);
+            this.ParameterSetting.Size = new System.Drawing.Size(1910, 861);
+            this.ParameterSetting.TabIndex = 1;
+            this.ParameterSetting.Text = "ParameterSetting";
+            this.ParameterSetting.UseVisualStyleBackColor = true;
             // 
             // FromParameterSetting
             // 

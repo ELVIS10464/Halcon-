@@ -98,7 +98,9 @@
     <Compile Include="Base\HalconImageConverter.cs" />
     <Compile Include="Base\IniManager.cs" />
     <Compile Include="Module\LogInfo.cs" />
+    <Compile Include="Module\MappingModule.cs" />
     <Compile Include="Module\MappingProcess.cs" />
+    <Compile Include="Module\ReadAlgorithmParameterINI.cs" />
     <Compile Include="Module\ReadDefaultINI.cs" />
     <Compile Include="Module\ReadROIINI.cs" />
     <Compile Include="Program.cs" />

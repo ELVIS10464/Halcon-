@@ -61,6 +61,7 @@ namespace AlgorithmProcess
         public ROIList ReadRecipeINI(string INIPath, int CameraNumber)
         {
             iniManager = new IniManager(INIPath);
+
             ROIList rOIList = new ROIList();
 
             // CountSlice 
