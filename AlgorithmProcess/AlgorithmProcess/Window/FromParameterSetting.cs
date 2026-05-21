@@ -217,9 +217,11 @@ namespace AlgorithmProcess.Window
 
             MappingModule MM_Clone = MM.Clone();
 
-            CountL = MM_Clone.CountSlice_TwoCamera(_hImageLeft, _hImageRight, mappingParameter, out CountR, out ResultType, out CountSliceResultList);
+            MM_Clone.SetMode("teach");
 
+            CountL = MM_Clone.CountSlice_TwoCamera(_hImageLeft, _hImageRight, rOIList, mappingParameter, out CountR, out ResultType, out CountSliceResultList);
 
+            int a = 1;
         }
     }
 }

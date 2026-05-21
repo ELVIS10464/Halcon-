@@ -9,54 +9,7 @@ namespace AlgorithmProcess
 {
     public class ReadROIINI
     {
-        private IniManager iniManager;
-
-        //public ROIList ReadRecipeINI(string INIPath)
-        //{
-        //    iniManager = new IniManager(INIPath);
-
-        //    ROIList rOIList = new ROIList();
-
-        //    List<Rectangle> CountSlice_LeftImage_ROIList = new List<Rectangle>();
-
-        //    int CountSlice_LeftImage_Count = int.Parse(iniManager.ReadIniFile("ROIConfig", "CountSlice_LeftImage_Count", "default"));
-        //    int CountSlice_RightImage_Count = int.Parse(iniManager.ReadIniFile("ROIConfig", "CountSlice_RightImage_Count", "default"));
-        //    int CountSlice_MiddleImage_Count = int.Parse(iniManager.ReadIniFile("ROIConfig", "CountSlice_MiddleImage_Count", "default"));
-
-        //    int Stack_LeftImage_Count = int.Parse(iniManager.ReadIniFile("ROIConfig", "Stack_LeftImage_Count", "default"));
-        //    int Stack_RightImage_Count = int.Parse(iniManager.ReadIniFile("ROIConfig", "Stack_RightImage_Count", "default"));
-        //    int Stack_MiddleImage_Count = int.Parse(iniManager.ReadIniFile("ROIConfig", "Stack_MiddleImage_Count", "default"));
-            
-        //    int Thickness_LeftImage_Count = int.Parse(iniManager.ReadIniFile("ROIConfig", "Thickness_LeftImage_Count", "default"));
-        //    int Thickness_RightImage_Count = int.Parse(iniManager.ReadIniFile("ROIConfig", "Thickness_RightImage_Count", "default"));
-        //    int Thickness_MiddleImage_Count = int.Parse(iniManager.ReadIniFile("ROIConfig", "Thickness_MiddleImage_Count", "default"));
-
-        //    int Warpage_LeftImage_Count = int.Parse(iniManager.ReadIniFile("ROIConfig", "Warpage_LeftImage_Count", "default"));
-        //    int Warpage_RightImage_Count = int.Parse(iniManager.ReadIniFile("ROIConfig", "Warpage_RightImage_Count", "default"));
-        //    int Warpage_MiddleImage_Count = int.Parse(iniManager.ReadIniFile("ROIConfig", "Warpage_MiddleImage_Count", "default"));
-
-        //    int Gap_LeftImage_Count = int.Parse(iniManager.ReadIniFile("ROIConfig", "Gap_LeftImage_Count", "default"));
-        //    int Gap_RightImage_Count = int.Parse(iniManager.ReadIniFile("ROIConfig", "Gap_RightImage_Count", "default"));
-        //    int Gap_MiddleImage_Count = int.Parse(iniManager.ReadIniFile("ROIConfig", "Gap_MiddleImage_Count", "default"));
-            
-        //    for (int i = 0; i < CountSlice_LeftImage_Count; i++)
-        //    {
-        //        int X = int.Parse(iniManager.ReadIniFile("CountSlice_LeftImage" + (i + 1).ToString("00"), "ROI_X", "default"));
-        //        int Y = int.Parse(iniManager.ReadIniFile("CountSlice_LeftImage" + (i + 1).ToString("00"), "ROI_Y", "default"));
-        //        int W = int.Parse(iniManager.ReadIniFile("CountSlice_LeftImage" + (i + 1).ToString("00"), "ROI_W", "default"));
-        //        int H = int.Parse(iniManager.ReadIniFile("CountSlice_LeftImage" + (i + 1).ToString("00"), "ROI_H", "default"));
-
-        //        Rectangle rect = new Rectangle(X, Y, W, H);
-
-        //        CountSlice_LeftImage_ROIList.Add(rect);
-        //    }
-        //    CountSlice_LeftImage_ROIList.Sort((a, b) => a.X.CompareTo(b.X));
-
-
-
-
-        //    return rOIList;
-        //}
+        private IniManager iniManager;        
 
         public ROIList ReadRecipeINI(string INIPath, int CameraNumber)
         {

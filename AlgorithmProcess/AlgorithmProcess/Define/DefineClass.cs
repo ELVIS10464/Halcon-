@@ -57,39 +57,6 @@ namespace AlgorithmProcess
         public int C2 = 0;
     }
 
-    //public class ROIList
-    //{
-    //    /*********三相機*********/
-    //    //CountSlice_ThreeCamera
-    //    public ROI ThreeCamera_CountSlice_LeftImage_Panel_ROI = new ROI();
-    //    public ROI ThreeCamera_CountSlice_RightImage_Panel_ROI = new ROI();
-    //    public ROI ThreeCamera_CountSlice_MiddleImage_LeftPanel_ROI = new ROI();
-    //    public ROI ThreeCamera_CountSlice_MiddleImage_RightPanel_ROI = new ROI();
-    //    //Stack_ThreeCamera
-    //    public ROI ThreeCamera_Stack_LeftImage_Panel_ROI = new ROI();
-    //    public ROI ThreeCamera_Stack_RightImage_Panel_ROI = new ROI();
-    //    public ROI ThreeCamera_Stack_MiddleImage_LeftPanel_ROI = new ROI();
-    //    public ROI ThreeCamera_Stack_MiddleImage_RightPanel_ROI = new ROI();
-    //    //Thickness_ThreeCamera
-    //    public List<ROI> ThreeCamera_Thickness_LeftImage_ROIList = new List<ROI>();
-    //    public List<ROI> ThreeCamera_Thickness_MiddleImage_ROIList = new List<ROI>();
-    //    public List<ROI> ThreeCamera_Thickness_RightImage_ROIList = new List<ROI>();
-
-    //    /*********兩相機*********/
-    //    //CountSlice_TwoCamera
-    //    public ROI TwoCamera_CountSlice_LeftImage_Panel_ROI = new ROI();
-    //    public ROI TwoCamera_CountSlice_RightImage_Panel_ROI = new ROI();
-    //    public ROI TwoCamera_CountSlice_LeftImage_EdgePanel_ROI = new ROI();
-    //    public ROI TwoCamera_CountSlice_RightImage_EdgePanel_ROI = new ROI();
-    //    //Stack_TwoCamera
-    //    public ROI TwoCamera_Stack_LeftImage_Panel_ROI = new ROI();
-    //    public ROI TwoCamera_Stack_RightImage_Panel_ROI = new ROI();
-    //    //Thickness_TwoCamera
-    //    public List<ROI> TwoCamera_Thickness_LeftImage_ROIList = new List<ROI>();
-    //    public List<ROI> TwoCamera_Thickness_RightImage_ROIList = new List<ROI>();
-    //}
-
-
     /// <summary>
     /// ROI框選
     /// </summary>
@@ -188,7 +155,6 @@ namespace AlgorithmProcess
         }
     }
 
-
     /// <summary>
     /// 演算法Step顯示
     /// </summary>
@@ -221,6 +187,7 @@ namespace AlgorithmProcess
 
         public double[] projection_y = null;
     }
+
 
 
     /// <summary>
@@ -279,6 +246,8 @@ namespace AlgorithmProcess
         public double RightEdge_ThresholdMax { get; set; } = 90;
         public double LeftEdge_Area { get; set; } = 200;
         public double RightEdge_Area { get; set; } = 200;
+        public double LeftEdge_AreaRowDistance { get; set; } = 7;
+        public double RightEdge_AreaRowDistance { get; set; } = 7;
     }
     public class StackParameter
     {
