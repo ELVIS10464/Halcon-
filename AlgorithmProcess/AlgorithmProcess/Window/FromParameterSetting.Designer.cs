@@ -41,9 +41,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tableLayoutPanel_Main = new System.Windows.Forms.TableLayoutPanel();
             this.algorithmdisplay_panel = new System.Windows.Forms.Panel();
-            this.algorithmstep = new System.Windows.Forms.TabControl();
+            this.stepdisplay_tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel_Under = new System.Windows.Forms.TableLayoutPanel();
             this.test_btn = new System.Windows.Forms.Button();
             this.apply_btn = new System.Windows.Forms.Button();
@@ -54,7 +53,7 @@
             this.tableLayoutPanel_background.SuspendLayout();
             this.tableLayoutPanel_menu.SuspendLayout();
             this.tableLayoutPanel_Main.SuspendLayout();
-            this.algorithmstep.SuspendLayout();
+            this.stepdisplay_tabControl.SuspendLayout();
             this.tableLayoutPanel_Under.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -219,7 +218,7 @@
             this.tableLayoutPanel_Main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel_Main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel_Main.Controls.Add(this.algorithmdisplay_panel, 0, 0);
-            this.tableLayoutPanel_Main.Controls.Add(this.algorithmstep, 1, 0);
+            this.tableLayoutPanel_Main.Controls.Add(this.stepdisplay_tabControl, 1, 0);
             this.tableLayoutPanel_Main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_Main.Location = new System.Drawing.Point(3, 88);
             this.tableLayoutPanel_Main.Name = "tableLayoutPanel_Main";
@@ -238,16 +237,15 @@
             this.algorithmdisplay_panel.Size = new System.Drawing.Size(943, 672);
             this.algorithmdisplay_panel.TabIndex = 0;
             // 
-            // algorithmstep
+            // stepdisplay_tabControl
             // 
-            this.algorithmstep.Controls.Add(this.tabPage1);
-            this.algorithmstep.Controls.Add(this.tabPage2);
-            this.algorithmstep.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.algorithmstep.Location = new System.Drawing.Point(952, 3);
-            this.algorithmstep.Name = "algorithmstep";
-            this.algorithmstep.SelectedIndex = 0;
-            this.algorithmstep.Size = new System.Drawing.Size(943, 672);
-            this.algorithmstep.TabIndex = 1;
+            this.stepdisplay_tabControl.Controls.Add(this.tabPage1);
+            this.stepdisplay_tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stepdisplay_tabControl.Location = new System.Drawing.Point(952, 3);
+            this.stepdisplay_tabControl.Name = "stepdisplay_tabControl";
+            this.stepdisplay_tabControl.SelectedIndex = 0;
+            this.stepdisplay_tabControl.Size = new System.Drawing.Size(943, 672);
+            this.stepdisplay_tabControl.TabIndex = 1;
             // 
             // tabPage1
             // 
@@ -258,16 +256,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 35);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(935, 633);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel_Under
             // 
@@ -333,7 +321,7 @@
             this.tableLayoutPanel_menu.ResumeLayout(false);
             this.tableLayoutPanel_menu.PerformLayout();
             this.tableLayoutPanel_Main.ResumeLayout(false);
-            this.algorithmstep.ResumeLayout(false);
+            this.stepdisplay_tabControl.ResumeLayout(false);
             this.tableLayoutPanel_Under.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -351,9 +339,8 @@
         private System.Windows.Forms.ComboBox SelectSlot_cb;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Main;
         private System.Windows.Forms.Panel algorithmdisplay_panel;
-        private System.Windows.Forms.TabControl algorithmstep;
+        private System.Windows.Forms.TabControl stepdisplay_tabControl;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ComboBox selectprocess_cb;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button runprocess_btn;

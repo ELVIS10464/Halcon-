@@ -15,6 +15,12 @@ namespace AlgorithmProcess.Window
 {
     public partial class FromParameterSetting : UserControl
     {
+        // =============================== 視窗介面中的UserControl ===============================
+        
+        //private FromParameterSetting_StepSetting fromParameterSetting_StepSetting = null;
+
+        // =============================== 視窗介面中的UserControl ===============================
+
         // =============================== function建立 ===============================
 
         private readonly ImageConverter _ImageConverter = new ImageConverter();
@@ -221,7 +227,47 @@ namespace AlgorithmProcess.Window
 
             CountL = MM_Clone.CountSlice_TwoCamera(_hImageLeft, _hImageRight, rOIList, mappingParameter, out CountR, out ResultType, out CountSliceResultList);
 
+            ShowResultList(CountSliceResultList);
+
             int a = 1;
+        }
+
+        public void ShowResultList(List<DebugResult> ResultList)
+        {
+            if (ResultList == null || ResultList.Count == 0) return;
+
+            stepdisplay_tabControl.TabPages.Clear();
+
+            for (int i = 0; i < ResultList.Count; i++)
+            {
+                var result = ResultList[i];
+                string tabTitle = result.Name;
+
+                // 2. 建立新分頁 (TabPage)
+                TabPage newPage = new TabPage(tabTitle);
+                newPage.Name = $"tabPage_Step_{i}";
+                newPage.Padding = new Padding(3); // 設定分頁內縮邊距
+
+                // 3. 建立中間緩衝面板 (Panel)
+                Panel containerPanel = new Panel();
+                containerPanel.Name = $"panel_StepContainer_{i}";
+                containerPanel.Dock = DockStyle.Fill;            // 面板填滿整頁 TabPage
+                containerPanel.BackColor = Color.Transparent;    // 讓底色隨佈景切換
+
+                // 💡 現場調機小技巧：可以開啟 Panel 的 AutoScroll，萬一小螢幕解析度跑掉，畫面不會被切掉
+                //containerPanel.AutoScroll = true;
+
+                // 4. 實例化數據顯示控制項 (UserControl)
+                FromParameterSetting_StepSetting stepUI = new FromParameterSetting_StepSetting();
+                stepUI.Dock = DockStyle.Fill;                    // 控制項填滿整個 Panel
+                //stepUI.UpdateData(result);                       // 餵入演算法數據
+
+                // 5. 【關鍵層級組合】
+                containerPanel.Controls.Add(stepUI);             // A. 將 UserControl 加到 Panel 上
+                newPage.Controls.Add(containerPanel);            // B. 將 Panel 加到 TabPage 上
+
+                stepdisplay_tabControl.TabPages.Add(newPage);          // C. 將 TabPage 加到 TabControl 容器中
+            }
         }
     }
 }

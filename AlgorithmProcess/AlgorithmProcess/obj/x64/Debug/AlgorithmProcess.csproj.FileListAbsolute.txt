@@ -14,7 +14,9 @@ C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\Algorithm
 C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\Algorith.6E488B84.Up2Date
 C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.exe
 C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.pdb
-C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.exe.config
 C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.Window.FromDisplayResult.resources
 C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.Window.FromImageCrop.resources
 C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.Window.FromParameterSetting.resources
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.Window.FromParameterSetting_StepSetting.resources
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.Window.FromParameterSetting_StepSetting_Parameter.resources
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.exe.config

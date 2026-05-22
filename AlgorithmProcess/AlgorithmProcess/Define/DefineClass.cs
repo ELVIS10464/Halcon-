@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HalconDotNet;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -158,37 +159,75 @@ namespace AlgorithmProcess
     /// <summary>
     /// 演算法Step顯示
     /// </summary>
-    public class Equation
-    {
-        public string m = string.Empty;
-        public string b = string.Empty;
-    }
     public class DebugResult
     {
-        public string Type = string.Empty;
+        public Bitmap Image { get; set; }           // 檢測歷程圖
+        public string Type { get; set; }            // 結果類型 (e.g., "EdgeCheck", "Alignment")
+        public string Name { get; set; }            // 步驟名稱 (e.g., "LeftEdge_Measure")
+        public string Description { get; set; }     // 詳細描述
 
-        public string Name = string.Empty;
-
-        public string Description = string.Empty;
-
-        public bool _isComBoBoxSelect = false;
-
-        public List<List<Point>> PanelPointList = null;
-
-        public List<double> ThicknessList = null;
-
-        public List<Equation> EquationList = null;
-
-        public string InspectResult = string.Empty;
-
-        public Bitmap Image = null;
-
-        public double[] projection_x = null;
-
-        public double[] projection_y = null;
+        // ✨ 依照變數型態，只區分為這兩個清單
+        public List<SingleVariableMetric> Variables { get; set; } = new List<SingleVariableMetric>();
+        public List<ArrayMetric> Arrays { get; set; } = new List<ArrayMetric>();
     }
 
+    /// <summary>
+    /// 所有量測數據的基底
+    /// <summary>
+    public abstract class MetricBase
+    {
+        public string Name { get; set; }        // 變數名稱 (e.g., "M", "Intercept_B", "All_Row")
+        public string Description { get; set; } // 變數描述 (e.g., "直線斜率", "量測到的 Y 座標陣列")
+    }
 
+    /// <summary>
+    /// 類型一：單一變數（支援 int, double, string 等）
+    /// <summary>
+    public class SingleVariableMetric : MetricBase
+    {
+        public object Value { get; set; }       // 儲存單一數值
+
+        public SingleVariableMetric(string name, string desc, object value)
+        {
+            this.Name = name;
+            this.Description = desc;
+            this.Value = value;
+        }
+
+        public override string ToString() => $"{Name} ({Description}) = {Value}";
+    }
+
+    /// <summary>
+    /// 類型二：陣列與點群（統一用原生的 List<object> 或 List<double>）
+    /// </summary>
+    public class ArrayMetric : MetricBase
+    {
+        public List<object> Values { get; set; } = new List<object>(); // 儲存陣列資料
+
+        public ArrayMetric(string name, string desc)
+        {
+            this.Name = name;
+            this.Description = desc;
+        }
+
+        // 💡 關鍵建構子：傳入 Halcon HTuple 陣列，直接拆箱轉成 C# List 並釋放指標
+        public ArrayMetric(string name, string desc, HTuple hTuple) : this(name, desc)
+        {
+            if (hTuple == null || hTuple.TupleLength() == 0) return;
+
+            int len = hTuple.TupleLength();
+            for (int i = 0; i < len; i++)
+            {
+                // 自動識別 Halcon 內部型別轉入 C#
+                if (hTuple[i].Type == HTupleType.DOUBLE)
+                    Values.Add(hTuple[i].D);
+                else if (hTuple[i].Type == HTupleType.INTEGER)
+                    Values.Add(hTuple[i].I);
+                else
+                    Values.Add(hTuple[i].S);
+            }
+        }
+    }
 
     /// <summary>
     /// 演算法參數設定
