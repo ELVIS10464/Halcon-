@@ -39,10 +39,11 @@
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tableLayoutPanel1.Controls.Add(this.trackBar1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.numericUpDown1, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.lbl_ParamName, 0, 0);
@@ -51,36 +52,42 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 69F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(541, 69);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(541, 40);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // trackBar1
             // 
             this.trackBar1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trackBar1.Location = new System.Drawing.Point(138, 3);
+            this.trackBar1.Location = new System.Drawing.Point(243, 0);
+            this.trackBar1.Margin = new System.Windows.Forms.Padding(0);
+            this.trackBar1.Maximum = 999;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(264, 63);
+            this.trackBar1.Size = new System.Drawing.Size(216, 40);
             this.trackBar1.TabIndex = 0;
+            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
             // numericUpDown1
             // 
             this.numericUpDown1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown1.Location = new System.Drawing.Point(408, 3);
+            this.numericUpDown1.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDown1.Location = new System.Drawing.Point(462, 4);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(130, 35);
+            this.numericUpDown1.Size = new System.Drawing.Size(76, 33);
             this.numericUpDown1.TabIndex = 1;
             // 
             // lbl_ParamName
             // 
-            this.lbl_ParamName.AutoSize = true;
             this.lbl_ParamName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbl_ParamName.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_ParamName.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lbl_ParamName.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_ParamName.Location = new System.Drawing.Point(3, 0);
             this.lbl_ParamName.Name = "lbl_ParamName";
-            this.lbl_ParamName.Size = new System.Drawing.Size(129, 69);
+            this.lbl_ParamName.Size = new System.Drawing.Size(237, 40);
             this.lbl_ParamName.TabIndex = 2;
             this.lbl_ParamName.Text = "label1";
             // 
@@ -90,7 +97,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FromParameterSetting_StepSetting_Parameter";
-            this.Size = new System.Drawing.Size(541, 69);
+            this.Size = new System.Drawing.Size(541, 40);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
@@ -104,8 +111,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
-
-        // ✨ 4. 變數宣告安全更名，不再與系統屬性衝突
         private System.Windows.Forms.Label lbl_ParamName;
     }
 }

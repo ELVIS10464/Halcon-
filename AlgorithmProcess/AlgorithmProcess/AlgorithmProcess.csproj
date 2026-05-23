@@ -123,11 +123,11 @@
     <Compile Include="Window\FromParameterSetting.Designer.cs">
       <DependentUpon>FromParameterSetting.cs</DependentUpon>
     </Compile>
-    <Compile Include="Window\FromParameterSetting_StepSetting.cs">
+    <Compile Include="Window\FromParameterSetting_StepDisplay.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Window\FromParameterSetting_StepSetting.Designer.cs">
-      <DependentUpon>FromParameterSetting_StepSetting.cs</DependentUpon>
+    <Compile Include="Window\FromParameterSetting_StepDisplay.Designer.cs">
+      <DependentUpon>FromParameterSetting_StepDisplay.cs</DependentUpon>
     </Compile>
     <Compile Include="Window\FromParameterSetting_StepSetting_Parameter.cs">
       <SubType>UserControl</SubType>
@@ -156,8 +156,8 @@
     <EmbeddedResource Include="Window\FromParameterSetting.resx">
       <DependentUpon>FromParameterSetting.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Window\FromParameterSetting_StepSetting.resx">
-      <DependentUpon>FromParameterSetting_StepSetting.cs</DependentUpon>
+    <EmbeddedResource Include="Window\FromParameterSetting_StepDisplay.resx">
+      <DependentUpon>FromParameterSetting_StepDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Window\FromParameterSetting_StepSetting_Parameter.resx">
       <DependentUpon>FromParameterSetting_StepSetting_Parameter.cs</DependentUpon>

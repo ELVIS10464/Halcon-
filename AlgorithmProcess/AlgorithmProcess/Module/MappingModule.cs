@@ -60,7 +60,7 @@ namespace AlgorithmProcess
             if (mode == "teach")
             {
                 Bitmap bmp = ShowImagePoint(_hImageL);
-                DebugResult debugResult = GenerateDebugResult(bmp, "CountSlice_TwoCamera", "FindPanelEdgeCount", "Crop Left Image Position");
+                DebugResult debugResult = GenerateDebugResult(bmp, "CountSlice", "FindPanelEdgeCount", "Crop Left Image Position");
 
                 debugResult.Variables.Add(new SingleVariableMetric("L_Edge_Panel_Col1", "ROI C1", L_Edge_Panel_Col1));
                 debugResult.Variables.Add(new SingleVariableMetric("L_Edge_Panel_Col2", "ROI C2", L_Edge_Panel_Col2));
@@ -75,7 +75,7 @@ namespace AlgorithmProcess
             if (mode == "teach")
             {
                 Bitmap bmp = ShowImagePoint(_hImageEdgeL);
-                DebugResult debugResult = GenerateDebugResult(bmp, "CountSlice_TwoCamera", "FindPanelEdgeCount", "Crop Left Image");
+                DebugResult debugResult = GenerateDebugResult(bmp, "CountSlice", "FindPanelEdgeCount", "Crop Left Image");
 
                 debugResult.Variables.Add(new SingleVariableMetric("L_Edge_Panel_Col1", "ROI C1", L_Edge_Panel_Col1));
                 debugResult.Variables.Add(new SingleVariableMetric("L_Edge_Panel_Col2", "ROI C2", L_Edge_Panel_Col2));
@@ -97,6 +97,11 @@ namespace AlgorithmProcess
 
             if (mode == "teach")
             {
+                FindPanelCountResultListL[0].Parameters.Add(new ParamMetric("LeftEdge_ThresholdMin", "Threshold Min", mappingParameter.TwoCamera.CountSlice.LeftEdge_ThresholdMin));
+                FindPanelCountResultListL[0].Parameters.Add(new ParamMetric("LeftEdge_ThresholdMax", "Threshold Max", mappingParameter.TwoCamera.CountSlice.LeftEdge_ThresholdMax));
+                FindPanelCountResultListL[0].Parameters.Add(new ParamMetric("LeftEdge_Area", "Area", mappingParameter.TwoCamera.CountSlice.LeftEdge_Area));
+                FindPanelCountResultListL[0].Parameters.Add(new ParamMetric("LeftEdge_AreaRowDistance", "Area Row Distance", mappingParameter.TwoCamera.CountSlice.LeftEdge_AreaRowDistance));
+
                 CountSliceResultList.AddRange(FindPanelCountResultListL);
             }
 
@@ -109,7 +114,7 @@ namespace AlgorithmProcess
             if (mode == "teach")
             {
                 Bitmap bmp = ShowImagePoint(_hImageR);
-                DebugResult debugResult = GenerateDebugResult(bmp, "CountSlice_TwoCamera", "FindPanelEdgeCount", "Crop Right Image Position");
+                DebugResult debugResult = GenerateDebugResult(bmp, "CountSlice", "FindPanelEdgeCount", "Crop Right Image Position");
 
                 debugResult.Variables.Add(new SingleVariableMetric("R_Edge_Panel_Col1", "ROI C1", R_Edge_Panel_Col1));
                 debugResult.Variables.Add(new SingleVariableMetric("R_Edge_Panel_Col2", "ROI C2", R_Edge_Panel_Col2));
@@ -124,7 +129,7 @@ namespace AlgorithmProcess
             if (mode == "teach")
             {
                 Bitmap bmp = ShowImagePoint(_hImageEdgeR);
-                DebugResult debugResult = GenerateDebugResult(bmp, "CountSlice_TwoCamera", "FindPanelEdgeCount", "Crop Right Image");
+                DebugResult debugResult = GenerateDebugResult(bmp, "CountSlice", "FindPanelEdgeCount", "Crop Right Image");
 
                 debugResult.Variables.Add(new SingleVariableMetric("R_Edge_Panel_Col1", "ROI C1", R_Edge_Panel_Col1));
                 debugResult.Variables.Add(new SingleVariableMetric("R_Edge_Panel_Col2", "ROI C2", R_Edge_Panel_Col2));
@@ -146,6 +151,11 @@ namespace AlgorithmProcess
 
             if (mode == "teach")
             {
+                FindPanelCountResultListR[0].Parameters.Add(new ParamMetric("RightEdge_ThresholdMin", "Threshold Min", mappingParameter.TwoCamera.CountSlice.RightEdge_ThresholdMin));
+                FindPanelCountResultListR[0].Parameters.Add(new ParamMetric("RightEdge_ThresholdMax", "Threshold Max", mappingParameter.TwoCamera.CountSlice.RightEdge_ThresholdMax));
+                FindPanelCountResultListR[0].Parameters.Add(new ParamMetric("RightEdge_Area", "Area", mappingParameter.TwoCamera.CountSlice.RightEdge_Area));
+                FindPanelCountResultListR[0].Parameters.Add(new ParamMetric("RightEdge_AreaRowDistance", "Area Row Distance", mappingParameter.TwoCamera.CountSlice.RightEdge_AreaRowDistance));
+
                 CountSliceResultList.AddRange(FindPanelCountResultListR);
             }
 
@@ -433,7 +443,7 @@ namespace AlgorithmProcess
 
                     Bitmap bmp = ShowImagePoint(_hImg);
 
-                    DebugResult debugResult = GenerateDebugResult(bmp, "CountSlice_TwoCamera", "FindPanelEdgeCount", "Result");
+                    DebugResult debugResult = GenerateDebugResult(bmp, "CountSlice", "FindPanelEdgeCount", "Result");
 
                     debugResult.Variables.Add(new SingleVariableMetric("Edge_ThresholdMin", "Threshold", Edge_ThresholdMin));
                     debugResult.Variables.Add(new SingleVariableMetric("Edge_ThresholdMax", "Threshold", Edge_ThresholdMax));

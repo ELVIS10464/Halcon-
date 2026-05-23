@@ -167,6 +167,7 @@ namespace AlgorithmProcess
         public string Description { get; set; }     // 詳細描述
 
         // ✨ 依照變數型態，只區分為這兩個清單
+        public List<ParamMetric> Parameters { get; set; } = new List<ParamMetric>();
         public List<SingleVariableMetric> Variables { get; set; } = new List<SingleVariableMetric>();
         public List<ArrayMetric> Arrays { get; set; } = new List<ArrayMetric>();
     }
@@ -181,7 +182,22 @@ namespace AlgorithmProcess
     }
 
     /// <summary>
-    /// 類型一：單一變數（支援 int, double, string 等）
+    /// 類型一：參數（支援 int, double, string 等）
+    /// <summary>
+    public class ParamMetric : MetricBase
+    {
+        public double Value { get; set; }       // 儲存單一數值
+        public ParamMetric(string name, string desc, double value)
+        {
+            this.Name = name;
+            this.Description = desc;
+            this.Value = value;
+        }
+        public override string ToString() => $"{Name} ({Description}) = {Value}";
+    }
+
+    /// <summary>
+    /// 類型二：單一變數（支援 int, double, string 等）
     /// <summary>
     public class SingleVariableMetric : MetricBase
     {
@@ -198,7 +214,7 @@ namespace AlgorithmProcess
     }
 
     /// <summary>
-    /// 類型二：陣列與點群（統一用原生的 List<object> 或 List<double>）
+    /// 類型三：陣列與點群（統一用原生的 List<object> 或 List<double>）
     /// </summary>
     public class ArrayMetric : MetricBase
     {

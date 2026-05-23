@@ -32,29 +32,30 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.AlgorithmDisplay = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel_background = new System.Windows.Forms.TableLayoutPanel();
+            this.stepdisplay_tabControl = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel_menu = new System.Windows.Forms.TableLayoutPanel();
             this.runprocess_btn = new System.Windows.Forms.Button();
             this.saveparameter_btn = new System.Windows.Forms.Button();
-            this.selectprocess_cb = new System.Windows.Forms.ComboBox();
+            this.SelectProcess_cb = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.SelectSlot_cb = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel_Main = new System.Windows.Forms.TableLayoutPanel();
-            this.algorithmdisplay_panel = new System.Windows.Forms.Panel();
-            this.stepdisplay_tabControl = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel_Under = new System.Windows.Forms.TableLayoutPanel();
             this.test_btn = new System.Windows.Forms.Button();
             this.apply_btn = new System.Windows.Forms.Button();
+            this.Point_statusStrip = new System.Windows.Forms.StatusStrip();
+            this.lbl_StatusCoordinate = new System.Windows.Forms.ToolStripStatusLabel();
             this.ParameterSetting = new System.Windows.Forms.TabPage();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.AlgorithmDisplay.SuspendLayout();
             this.tableLayoutPanel_background.SuspendLayout();
-            this.tableLayoutPanel_menu.SuspendLayout();
-            this.tableLayoutPanel_Main.SuspendLayout();
             this.stepdisplay_tabControl.SuspendLayout();
+            this.tableLayoutPanel_menu.SuspendLayout();
             this.tableLayoutPanel_Under.SuspendLayout();
+            this.Point_statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -93,8 +94,8 @@
             // 
             this.tableLayoutPanel_background.ColumnCount = 1;
             this.tableLayoutPanel_background.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_background.Controls.Add(this.stepdisplay_tabControl, 0, 1);
             this.tableLayoutPanel_background.Controls.Add(this.tableLayoutPanel_menu, 0, 0);
-            this.tableLayoutPanel_background.Controls.Add(this.tableLayoutPanel_Main, 0, 1);
             this.tableLayoutPanel_background.Controls.Add(this.tableLayoutPanel_Under, 0, 2);
             this.tableLayoutPanel_background.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_background.Location = new System.Drawing.Point(3, 3);
@@ -105,6 +106,26 @@
             this.tableLayoutPanel_background.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel_background.Size = new System.Drawing.Size(1904, 855);
             this.tableLayoutPanel_background.TabIndex = 0;
+            // 
+            // stepdisplay_tabControl
+            // 
+            this.stepdisplay_tabControl.Controls.Add(this.tabPage1);
+            this.stepdisplay_tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stepdisplay_tabControl.Location = new System.Drawing.Point(3, 88);
+            this.stepdisplay_tabControl.Name = "stepdisplay_tabControl";
+            this.stepdisplay_tabControl.SelectedIndex = 0;
+            this.stepdisplay_tabControl.Size = new System.Drawing.Size(1898, 678);
+            this.stepdisplay_tabControl.TabIndex = 15;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 35);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1890, 639);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel_menu
             // 
@@ -117,7 +138,7 @@
             this.tableLayoutPanel_menu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel_menu.Controls.Add(this.runprocess_btn, 5, 0);
             this.tableLayoutPanel_menu.Controls.Add(this.saveparameter_btn, 4, 0);
-            this.tableLayoutPanel_menu.Controls.Add(this.selectprocess_cb, 3, 0);
+            this.tableLayoutPanel_menu.Controls.Add(this.SelectProcess_cb, 3, 0);
             this.tableLayoutPanel_menu.Controls.Add(this.label1, 2, 0);
             this.tableLayoutPanel_menu.Controls.Add(this.SelectSlot_cb, 1, 0);
             this.tableLayoutPanel_menu.Controls.Add(this.label3, 0, 0);
@@ -126,6 +147,7 @@
             this.tableLayoutPanel_menu.Name = "tableLayoutPanel_menu";
             this.tableLayoutPanel_menu.RowCount = 1;
             this.tableLayoutPanel_menu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_menu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 79F));
             this.tableLayoutPanel_menu.Size = new System.Drawing.Size(1898, 79);
             this.tableLayoutPanel_menu.TabIndex = 0;
             // 
@@ -154,23 +176,17 @@
             this.saveparameter_btn.Text = "Save Parameter";
             this.saveparameter_btn.UseVisualStyleBackColor = true;
             // 
-            // selectprocess_cb
+            // SelectProcess_cb
             // 
-            this.selectprocess_cb.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.selectprocess_cb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.selectprocess_cb.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.selectprocess_cb.FormattingEnabled = true;
-            this.selectprocess_cb.Items.AddRange(new object[] {
-            "CountSlice",
-            "Stack",
-            "Thickness",
-            "Warpage",
-            "Gap"});
-            this.selectprocess_cb.Location = new System.Drawing.Point(951, 3);
-            this.selectprocess_cb.Name = "selectprocess_cb";
-            this.selectprocess_cb.Size = new System.Drawing.Size(310, 40);
-            this.selectprocess_cb.TabIndex = 12;
-            this.selectprocess_cb.SelectedIndexChanged += new System.EventHandler(this.selectprocess_cb_SelectedIndexChanged);
+            this.SelectProcess_cb.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SelectProcess_cb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SelectProcess_cb.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SelectProcess_cb.FormattingEnabled = true;
+            this.SelectProcess_cb.Location = new System.Drawing.Point(951, 3);
+            this.SelectProcess_cb.Name = "SelectProcess_cb";
+            this.SelectProcess_cb.Size = new System.Drawing.Size(310, 40);
+            this.SelectProcess_cb.TabIndex = 12;
+            this.SelectProcess_cb.SelectedIndexChanged += new System.EventHandler(this.SelectProcess_cb_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -212,51 +228,6 @@
             this.label3.Text = "Select Slot";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tableLayoutPanel_Main
-            // 
-            this.tableLayoutPanel_Main.ColumnCount = 2;
-            this.tableLayoutPanel_Main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel_Main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel_Main.Controls.Add(this.algorithmdisplay_panel, 0, 0);
-            this.tableLayoutPanel_Main.Controls.Add(this.stepdisplay_tabControl, 1, 0);
-            this.tableLayoutPanel_Main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel_Main.Location = new System.Drawing.Point(3, 88);
-            this.tableLayoutPanel_Main.Name = "tableLayoutPanel_Main";
-            this.tableLayoutPanel_Main.RowCount = 1;
-            this.tableLayoutPanel_Main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_Main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 678F));
-            this.tableLayoutPanel_Main.Size = new System.Drawing.Size(1898, 678);
-            this.tableLayoutPanel_Main.TabIndex = 1;
-            // 
-            // algorithmdisplay_panel
-            // 
-            this.algorithmdisplay_panel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.algorithmdisplay_panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.algorithmdisplay_panel.Location = new System.Drawing.Point(3, 3);
-            this.algorithmdisplay_panel.Name = "algorithmdisplay_panel";
-            this.algorithmdisplay_panel.Size = new System.Drawing.Size(943, 672);
-            this.algorithmdisplay_panel.TabIndex = 0;
-            // 
-            // stepdisplay_tabControl
-            // 
-            this.stepdisplay_tabControl.Controls.Add(this.tabPage1);
-            this.stepdisplay_tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.stepdisplay_tabControl.Location = new System.Drawing.Point(952, 3);
-            this.stepdisplay_tabControl.Name = "stepdisplay_tabControl";
-            this.stepdisplay_tabControl.SelectedIndex = 0;
-            this.stepdisplay_tabControl.Size = new System.Drawing.Size(943, 672);
-            this.stepdisplay_tabControl.TabIndex = 1;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 35);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(935, 633);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
             // tableLayoutPanel_Under
             // 
             this.tableLayoutPanel_Under.ColumnCount = 3;
@@ -265,6 +236,7 @@
             this.tableLayoutPanel_Under.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel_Under.Controls.Add(this.test_btn, 1, 0);
             this.tableLayoutPanel_Under.Controls.Add(this.apply_btn, 2, 0);
+            this.tableLayoutPanel_Under.Controls.Add(this.Point_statusStrip, 0, 0);
             this.tableLayoutPanel_Under.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_Under.Location = new System.Drawing.Point(3, 772);
             this.tableLayoutPanel_Under.Name = "tableLayoutPanel_Under";
@@ -284,6 +256,7 @@
             this.test_btn.TabIndex = 14;
             this.test_btn.Text = "Test";
             this.test_btn.UseVisualStyleBackColor = true;
+            this.test_btn.Click += new System.EventHandler(this.test_btn_Click);
             // 
             // apply_btn
             // 
@@ -296,6 +269,25 @@
             this.apply_btn.TabIndex = 15;
             this.apply_btn.Text = "Apply";
             this.apply_btn.UseVisualStyleBackColor = true;
+            this.apply_btn.Click += new System.EventHandler(this.apply_btn_Click);
+            // 
+            // Point_statusStrip
+            // 
+            this.Point_statusStrip.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Point_statusStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.Point_statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lbl_StatusCoordinate});
+            this.Point_statusStrip.Location = new System.Drawing.Point(0, 0);
+            this.Point_statusStrip.Name = "Point_statusStrip";
+            this.Point_statusStrip.Size = new System.Drawing.Size(949, 80);
+            this.Point_statusStrip.TabIndex = 16;
+            this.Point_statusStrip.Text = "statusStrip1";
+            // 
+            // lbl_StatusCoordinate
+            // 
+            this.lbl_StatusCoordinate.Name = "lbl_StatusCoordinate";
+            this.lbl_StatusCoordinate.Size = new System.Drawing.Size(192, 73);
+            this.lbl_StatusCoordinate.Text = "toolStripStatusLabel1";
             // 
             // ParameterSetting
             // 
@@ -318,11 +310,13 @@
             this.tabControl1.ResumeLayout(false);
             this.AlgorithmDisplay.ResumeLayout(false);
             this.tableLayoutPanel_background.ResumeLayout(false);
+            this.stepdisplay_tabControl.ResumeLayout(false);
             this.tableLayoutPanel_menu.ResumeLayout(false);
             this.tableLayoutPanel_menu.PerformLayout();
-            this.tableLayoutPanel_Main.ResumeLayout(false);
-            this.stepdisplay_tabControl.ResumeLayout(false);
             this.tableLayoutPanel_Under.ResumeLayout(false);
+            this.tableLayoutPanel_Under.PerformLayout();
+            this.Point_statusStrip.ResumeLayout(false);
+            this.Point_statusStrip.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -337,16 +331,17 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_menu;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox SelectSlot_cb;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Main;
-        private System.Windows.Forms.Panel algorithmdisplay_panel;
-        private System.Windows.Forms.TabControl stepdisplay_tabControl;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.ComboBox selectprocess_cb;
+        private System.Windows.Forms.ComboBox SelectProcess_cb;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button runprocess_btn;
         private System.Windows.Forms.Button saveparameter_btn;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Under;
         private System.Windows.Forms.Button test_btn;
         private System.Windows.Forms.Button apply_btn;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.TabControl stepdisplay_tabControl;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.StatusStrip Point_statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel lbl_StatusCoordinate;
     }
 }
