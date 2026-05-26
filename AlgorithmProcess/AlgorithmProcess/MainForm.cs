@@ -21,6 +21,8 @@ namespace AlgorithmProcess
         private FromImageCrop fromImageCrop = null;
 
         private FromParameterSetting fromParameterSetting = null;
+
+        private FromAlgorithmTest fromAlgorithmTest = null;
         // =============================== 視窗介面中的UserControl ===============================
 
 
@@ -164,6 +166,10 @@ namespace AlgorithmProcess
             main_panel.Controls.Add(fromParameterSetting);
             fromParameterSetting.CallBackLog += OnLogReceived;
 
+            fromAlgorithmTest = new FromAlgorithmTest();
+            fromAlgorithmTest.Dock = DockStyle.Fill;
+            main_panel.Controls.Add(fromAlgorithmTest);
+
             fromDisplayResult.BringToFront();
         }
         //private void InitializeGUI()
@@ -200,6 +206,10 @@ namespace AlgorithmProcess
             else if (btn == parameter_btn)
             {
                 fromParameterSetting.BringToFront();
+            }
+            else if (btn == algorithmtest_btn)
+            {
+                fromAlgorithmTest.BringToFront();
             }
         }
 
@@ -269,6 +279,8 @@ namespace AlgorithmProcess
             fromImageCrop.InitializeImageLoad(settingInfo);
 
             fromParameterSetting.InitializeImageLoad(settingInfo);
+
+            fromAlgorithmTest.InitializeImageLoad(settingInfo);
         }
     }
 }

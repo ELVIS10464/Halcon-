@@ -35,7 +35,7 @@
             this.ImageCropData_btn = new System.Windows.Forms.Button();
             this.parameter_btn = new System.Windows.Forms.Button();
             this.selectrecipe_btn = new System.Windows.Forms.Button();
-            this.algorithmprocessstep_btn = new System.Windows.Forms.Button();
+            this.algorithmtest_btn = new System.Windows.Forms.Button();
             this.runalgorithm_btn = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -123,7 +123,7 @@
             this.menu_tableLayoutPanel.Controls.Add(this.ImageCropData_btn, 0, 5);
             this.menu_tableLayoutPanel.Controls.Add(this.parameter_btn, 0, 4);
             this.menu_tableLayoutPanel.Controls.Add(this.selectrecipe_btn, 0, 1);
-            this.menu_tableLayoutPanel.Controls.Add(this.algorithmprocessstep_btn, 0, 3);
+            this.menu_tableLayoutPanel.Controls.Add(this.algorithmtest_btn, 0, 3);
             this.menu_tableLayoutPanel.Controls.Add(this.runalgorithm_btn, 0, 2);
             this.menu_tableLayoutPanel.Controls.Add(this.home_btn, 0, 0);
             this.menu_tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -177,18 +177,18 @@
             this.selectrecipe_btn.Text = "Select Recipe";
             this.selectrecipe_btn.UseVisualStyleBackColor = true;
             // 
-            // algorithmprocessstep_btn
+            // algorithmtest_btn
             // 
-            this.algorithmprocessstep_btn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.algorithmprocessstep_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.algorithmprocessstep_btn.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.algorithmprocessstep_btn.Location = new System.Drawing.Point(3, 660);
-            this.algorithmprocessstep_btn.Name = "algorithmprocessstep_btn";
-            this.algorithmprocessstep_btn.Size = new System.Drawing.Size(201, 213);
-            this.algorithmprocessstep_btn.TabIndex = 5;
-            this.algorithmprocessstep_btn.Text = "Algorithm Process Step";
-            this.algorithmprocessstep_btn.UseVisualStyleBackColor = true;
-            this.algorithmprocessstep_btn.Click += new System.EventHandler(this.Btn_ClickEvent);
+            this.algorithmtest_btn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.algorithmtest_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.algorithmtest_btn.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.algorithmtest_btn.Location = new System.Drawing.Point(3, 660);
+            this.algorithmtest_btn.Name = "algorithmtest_btn";
+            this.algorithmtest_btn.Size = new System.Drawing.Size(201, 213);
+            this.algorithmtest_btn.TabIndex = 5;
+            this.algorithmtest_btn.Text = "Algorithm Test";
+            this.algorithmtest_btn.UseVisualStyleBackColor = true;
+            this.algorithmtest_btn.Click += new System.EventHandler(this.Btn_ClickEvent);
             // 
             // runalgorithm_btn
             // 
@@ -441,7 +441,7 @@
         private System.Windows.Forms.Button home_btn;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button runalgorithm_btn;
-        private System.Windows.Forms.Button algorithmprocessstep_btn;
+        private System.Windows.Forms.Button algorithmtest_btn;
         private System.Windows.Forms.TableLayoutPanel menu_tableLayoutPanel;
         private System.Windows.Forms.Button selectrecipe_btn;
         private System.Windows.Forms.Button parameter_btn;

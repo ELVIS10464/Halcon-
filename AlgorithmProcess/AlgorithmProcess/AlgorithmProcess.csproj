@@ -105,6 +105,12 @@
     <Compile Include="Module\ReadROIINI.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Window\FromAlgorithmTest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Window\FromAlgorithmTest.Designer.cs">
+      <DependentUpon>FromAlgorithmTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Window\FromDisplayResult.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -147,6 +153,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Window\FromAlgorithmTest.resx">
+      <DependentUpon>FromAlgorithmTest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Window\FromDisplayResult.resx">
       <DependentUpon>FromDisplayResult.cs</DependentUpon>
     </EmbeddedResource>
