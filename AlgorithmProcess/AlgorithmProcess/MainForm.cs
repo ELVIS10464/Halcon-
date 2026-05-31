@@ -169,6 +169,7 @@ namespace AlgorithmProcess
             fromAlgorithmTest = new FromAlgorithmTest();
             fromAlgorithmTest.Dock = DockStyle.Fill;
             main_panel.Controls.Add(fromAlgorithmTest);
+            fromAlgorithmTest.CallBackLog += OnLogReceived;
 
             fromDisplayResult.BringToFront();
         }

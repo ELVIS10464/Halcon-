@@ -85,7 +85,13 @@
     <Compile Include="Base\CustomPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Base\DrawLinePictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Base\GrahpicsExtension.cs" />
+    <Compile Include="Base\ScalePictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Define\DefineClass.cs" />
     <Compile Include="Define\DefineStruct.cs" />
     <Compile Include="MainForm.cs">
@@ -110,6 +116,12 @@
     </Compile>
     <Compile Include="Window\FromAlgorithmTest.Designer.cs">
       <DependentUpon>FromAlgorithmTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Window\FromAlgorithmTest_MeasurePos.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Window\FromAlgorithmTest_MeasurePos.Designer.cs">
+      <DependentUpon>FromAlgorithmTest_MeasurePos.cs</DependentUpon>
     </Compile>
     <Compile Include="Window\FromDisplayResult.cs">
       <SubType>UserControl</SubType>
@@ -155,6 +167,9 @@
     </Compile>
     <EmbeddedResource Include="Window\FromAlgorithmTest.resx">
       <DependentUpon>FromAlgorithmTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\FromAlgorithmTest_MeasurePos.resx">
+      <DependentUpon>FromAlgorithmTest_MeasurePos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Window\FromDisplayResult.resx">
       <DependentUpon>FromDisplayResult.cs</DependentUpon>

@@ -41,9 +41,8 @@ namespace AlgorithmProcess
 
         private Bitmap _internalImage;
 
-
-
-
+        // 📢 新增：控制目前是否允許圖片平移/移動與 ROI 互動
+        public bool EnablePanAndRoi { get; set; } = true;
 
         public Point _ptMouse = Point.Empty;
 
@@ -323,6 +322,11 @@ namespace AlgorithmProcess
             {
                 CallBackShowMenu(this);
 
+                return;
+            }
+
+            if (!EnablePanAndRoi)
+            {
                 return;
             }
 
