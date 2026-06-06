@@ -44,6 +44,9 @@
             this.MeasurePos = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridView_Point = new System.Windows.Forms.DataGridView();
+            this.No_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Row = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel_Button = new System.Windows.Forms.TableLayoutPanel();
             this.DrawLine_btn = new System.Windows.Forms.Button();
             this.Clear_btn = new System.Windows.Forms.Button();
@@ -63,9 +66,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.Direction_comboBox = new System.Windows.Forms.ComboBox();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.No_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Row = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel_background.SuspendLayout();
             this.tableLayoutPanel_menu.SuspendLayout();
             this.tableLayoutPanel_Main.SuspendLayout();
@@ -305,6 +305,27 @@
             this.dataGridView_Point.Size = new System.Drawing.Size(739, 340);
             this.dataGridView_Point.TabIndex = 3;
             // 
+            // No_Name
+            // 
+            this.No_Name.DataPropertyName = "No";
+            this.No_Name.HeaderText = "No";
+            this.No_Name.MinimumWidth = 8;
+            this.No_Name.Name = "No_Name";
+            // 
+            // Row
+            // 
+            this.Row.DataPropertyName = "Row";
+            this.Row.HeaderText = "Row";
+            this.Row.MinimumWidth = 8;
+            this.Row.Name = "Row";
+            // 
+            // Column
+            // 
+            this.Column.DataPropertyName = "Column";
+            this.Column.HeaderText = "Column";
+            this.Column.MinimumWidth = 8;
+            this.Column.Name = "Column";
+            // 
             // tableLayoutPanel_Button
             // 
             this.tableLayoutPanel_Button.ColumnCount = 2;
@@ -385,6 +406,7 @@
             this.ROIWidth_numericUpDown.Name = "ROIWidth_numericUpDown";
             this.ROIWidth_numericUpDown.Size = new System.Drawing.Size(143, 33);
             this.ROIWidth_numericUpDown.TabIndex = 8;
+            this.ROIWidth_numericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
             // 
             // Sigma_numericUpDown
             // 
@@ -400,6 +422,7 @@
             this.Sigma_numericUpDown.Name = "Sigma_numericUpDown";
             this.Sigma_numericUpDown.Size = new System.Drawing.Size(143, 33);
             this.Sigma_numericUpDown.TabIndex = 7;
+            this.Sigma_numericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
             // 
             // Amplitude_numericUpDown
             // 
@@ -415,6 +438,7 @@
             this.Amplitude_numericUpDown.Name = "Amplitude_numericUpDown";
             this.Amplitude_numericUpDown.Size = new System.Drawing.Size(143, 33);
             this.Amplitude_numericUpDown.TabIndex = 6;
+            this.Amplitude_numericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
             // 
             // Sigma_trackBar
             // 
@@ -423,6 +447,7 @@
             this.Sigma_trackBar.Name = "Sigma_trackBar";
             this.Sigma_trackBar.Size = new System.Drawing.Size(437, 61);
             this.Sigma_trackBar.TabIndex = 5;
+            this.Sigma_trackBar.Scroll += new System.EventHandler(this.TrackBar_Scroll);
             // 
             // label2
             // 
@@ -464,9 +489,11 @@
             // 
             this.Amplitude_trackBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Amplitude_trackBar.Location = new System.Drawing.Point(150, 3);
+            this.Amplitude_trackBar.Maximum = 255;
             this.Amplitude_trackBar.Name = "Amplitude_trackBar";
             this.Amplitude_trackBar.Size = new System.Drawing.Size(437, 61);
             this.Amplitude_trackBar.TabIndex = 3;
+            this.Amplitude_trackBar.Scroll += new System.EventHandler(this.TrackBar_Scroll);
             // 
             // ROIWidth_trackBar
             // 
@@ -475,6 +502,7 @@
             this.ROIWidth_trackBar.Name = "ROIWidth_trackBar";
             this.ROIWidth_trackBar.Size = new System.Drawing.Size(437, 61);
             this.ROIWidth_trackBar.TabIndex = 4;
+            this.ROIWidth_trackBar.Scroll += new System.EventHandler(this.TrackBar_Scroll);
             // 
             // tableLayoutPanel_Select
             // 
@@ -502,6 +530,7 @@
             this.Position_comboBox.Name = "Position_comboBox";
             this.Position_comboBox.Size = new System.Drawing.Size(364, 26);
             this.Position_comboBox.TabIndex = 6;
+            this.Position_comboBox.SelectedIndexChanged += new System.EventHandler(this.Direction_Position_SelectedIndexChanged);
             // 
             // label6
             // 
@@ -539,27 +568,7 @@
             this.Direction_comboBox.Name = "Direction_comboBox";
             this.Direction_comboBox.Size = new System.Drawing.Size(364, 26);
             this.Direction_comboBox.TabIndex = 4;
-            // 
-            // No_Name
-            // 
-            this.No_Name.DataPropertyName = "No";
-            this.No_Name.HeaderText = "No";
-            this.No_Name.MinimumWidth = 8;
-            this.No_Name.Name = "No_Name";
-            // 
-            // Row
-            // 
-            this.Row.DataPropertyName = "Row";
-            this.Row.HeaderText = "Row";
-            this.Row.MinimumWidth = 8;
-            this.Row.Name = "Row";
-            // 
-            // Column
-            // 
-            this.Column.DataPropertyName = "Column";
-            this.Column.HeaderText = "Column";
-            this.Column.MinimumWidth = 8;
-            this.Column.Name = "Column";
+            this.Direction_comboBox.SelectedIndexChanged += new System.EventHandler(this.Direction_Position_SelectedIndexChanged);
             // 
             // FromAlgorithmTest
             // 

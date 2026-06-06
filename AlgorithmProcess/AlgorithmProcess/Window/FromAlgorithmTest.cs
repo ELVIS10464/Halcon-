@@ -1,5 +1,6 @@
 ﻿using AlgorithmProcess.Base;
 using HalconDotNet;
+using Sunny.UI.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,32 +34,22 @@ namespace AlgorithmProcess.Window
         private List<string> SlotList = new List<string>();
         private List<string> CameraLocation = null;
         private int ImageIndex = 0;
-        private CustomPictureBox currentPictureBox = null;
+        private AdvancedPictureBox currentPictureBox = null;
 
-        // 宣告滑鼠操作模式
-        private enum MouseMode { None, DrawMeasureLine }
-        private MouseMode m_CurrentMouseMode = MouseMode.None;
+        // 🌟 全域變數：對齊 HALCON 官方預設值
+        public double G_Amplitude = 30.0; // 官方預設值為 30.0
+        public double G_Sigma = 1.0;     // 官方預設值為 1.0
+        public double G_ROIWidth = 30.0;
 
-        // 紀錄畫線的起點與終點（控制項 UI 座標，用於 Paint 繪圖）
-        private Point m_StartPoint = Point.Empty;
-        private Point m_EndPoint = Point.Empty;
-        private Point _ptMouseEnter = Point.Empty;
-        private bool m_IsDrawing = false;
-
-        // 💡 紀錄轉換後的「真實影像像素座標」，供給 Halcon 演算法使用
-        private PointF m_ImgStartPt = PointF.Empty;
-        private PointF m_ImgEndPt = PointF.Empty;
+        // 防止雙向綁定無窮迴圈的旗標
+        private bool isUpdating = false;
 
         public FromAlgorithmTest()
         {
             InitializeComponent();
-            InitializePictureBox();
             InitializeImageLoad(settingInfo);
-        }
-
-        public void InitializePictureBox()
-        {
-            // 這裡留空或做其他初始化
+            InitParamControlsBinding();
+            InitComboBoxItems();
         }
 
         public void InitializeImageLoad(SettingInfo settingInfo)
@@ -122,6 +113,88 @@ namespace AlgorithmProcess.Window
             }
         }
 
+        private void InitParamControlsBinding()
+        {
+            // 1. Amplitude (Threshold)：官方典型範圍 1 到 255，預設 30.0
+            Amplitude_numericUpDown.Minimum = 1.0M;
+            Amplitude_numericUpDown.Maximum = 255.0M;
+            Amplitude_numericUpDown.Increment = 1.0M;
+            Amplitude_numericUpDown.DecimalPlaces = 1;
+            Amplitude_numericUpDown.Value = (decimal)G_Amplitude;
+
+            Amplitude_trackBar.Minimum = 1;
+            Amplitude_trackBar.Maximum = 255;
+            Amplitude_trackBar.Value = (int)G_Amplitude;
+
+            Amplitude_trackBar.Tag = new ParamBindInfo { NumericControl = Amplitude_numericUpDown, ParamName = "Amplitude", Scale = 1.0 };
+            Amplitude_numericUpDown.Tag = new ParamBindInfo { TrackControl = Amplitude_trackBar, ParamName = "Amplitude", Scale = 1.0 };
+
+            // 2. Sigma：官方限制最小 0.4，典型上限 100，預設 1.0
+            Sigma_numericUpDown.Minimum = 0.4M; // 核心防呆：絕對不能小於 0.4
+            Sigma_numericUpDown.Maximum = 100.0M;
+            Sigma_numericUpDown.Increment = 0.1M;
+            Sigma_numericUpDown.DecimalPlaces = 2;
+            Sigma_numericUpDown.Value = (decimal)G_Sigma;
+
+            Sigma_trackBar.Minimum = 40;   // 0.4 * 100
+            Sigma_trackBar.Maximum = 10000; // 100.0 * 100
+            Sigma_trackBar.Value = (int)(G_Sigma * 100.0);
+
+            Sigma_trackBar.Tag = new ParamBindInfo { NumericControl = Sigma_numericUpDown, ParamName = "Sigma", Scale = 100.0 };
+            Sigma_numericUpDown.Tag = new ParamBindInfo { TrackControl = Sigma_trackBar, ParamName = "Sigma", Scale = 100.0 };
+
+            // 3. ROIWidth (Len2)
+            ROIWidth_numericUpDown.Minimum = 1.0M;
+            ROIWidth_numericUpDown.Maximum = 200.0M;
+            ROIWidth_numericUpDown.Increment = 1.0M;
+            ROIWidth_numericUpDown.DecimalPlaces = 1;
+            ROIWidth_numericUpDown.Value = (decimal)G_ROIWidth;
+
+            ROIWidth_trackBar.Minimum = 1;
+            ROIWidth_trackBar.Maximum = 200;
+            ROIWidth_trackBar.Value = (int)G_ROIWidth;
+
+            ROIWidth_trackBar.Tag = new ParamBindInfo { NumericControl = ROIWidth_numericUpDown, ParamName = "ROIWidth", Scale = 1.0 };
+            ROIWidth_numericUpDown.Tag = new ParamBindInfo { TrackControl = ROIWidth_trackBar, ParamName = "ROIWidth", Scale = 1.0 };
+
+            // 統一事件註冊
+            Amplitude_trackBar.Scroll += TrackBar_Scroll;
+            Sigma_trackBar.Scroll += TrackBar_Scroll;
+            ROIWidth_trackBar.Scroll += TrackBar_Scroll;
+
+            Amplitude_numericUpDown.ValueChanged += NumericUpDown_ValueChanged;
+            Sigma_numericUpDown.ValueChanged += NumericUpDown_ValueChanged;
+            ROIWidth_numericUpDown.ValueChanged += NumericUpDown_ValueChanged;
+        }
+
+        private class ParamBindInfo
+        {
+            public TrackBar TrackControl { get; set; }
+            public NumericUpDown NumericControl { get; set; }
+            public string ParamName { get; set; }
+            public double Scale { get; set; }
+        }
+
+        private void InitComboBoxItems()
+        {
+            Direction_comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            Direction_comboBox.Items.Clear();
+            Direction_comboBox.Items.Add("all");
+            Direction_comboBox.Items.Add("positive");
+            Direction_comboBox.Items.Add("negative");
+            Direction_comboBox.SelectedIndex = 0;
+
+            Position_comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            Position_comboBox.Items.Clear();
+            Position_comboBox.Items.Add("all");
+            Position_comboBox.Items.Add("first");
+            Position_comboBox.Items.Add("last");
+            Position_comboBox.SelectedIndex = 0;
+
+            Direction_comboBox.SelectedIndexChanged += Direction_Position_SelectedIndexChanged;
+            Position_comboBox.SelectedIndexChanged += Direction_Position_SelectedIndexChanged;
+        }
+
         private void SelectSlot_cb_SelectedIndexChanged(object sender, EventArgs e)
         {
             int index = SelectSlot_cb.SelectedIndex;
@@ -129,34 +202,30 @@ namespace AlgorithmProcess.Window
 
             Image_tabControl.TabPages.Clear();
 
-            // 🎯 外部迴圈程式碼大幅精簡：
             for (int i = 0; i < CameraLocation.Count; i++)
             {
-                DrawLinePictureBox picImage = new DrawLinePictureBox
+                AdvancedPictureBox picImage = new AdvancedPictureBox
                 {
                     Dock = DockStyle.Fill,
                 };
 
                 string ImageName = settingInfo.DirImagePath + "\\Slot" + ImageIndex.ToString("D2") + $"_{CameraLocation[i]}.bmp";
 
-                // 安全讀取與釋放檔案暫存
+                // 🟢 修正：將真實圖片絕對路徑綁定在控制項的 Tag，供後續拉動參數條時，即時量測演算法能夠直接讀檔
+                picImage.Tag = ImageName;
+
                 using (Bitmap tempImg = (Bitmap)_ImageConverter.ConvertFrom(File.ReadAllBytes(ImageName)))
                 {
-                    picImage.Image = tempImg; // 觸發自訂控制項內部的深拷貝與 FitWindow
+                    picImage.Image = tempImg;
                 }
 
-                // 🌟 核心：訂閱當線畫好、滑鼠放開時「傳出來」的像素座標事件
-                string currentCamLoc = CameraLocation[i]; // 避免 Closure 變數陷阱
+                string currentCamLoc = CameraLocation[i];
                 picImage.MeasureLineDrawn += (startPt, endPt) =>
                 {
-                    // 當使用者在該張圖上放開滑鼠時，會自動跑到這裡：
                     CallBackLog?.Invoke("INFO", $"[{currentCamLoc}] 接收到傳出卡尺線。起點:({startPt.X:F1}, {startPt.Y:F1}), 終點:({endPt.X:F1}, {endPt.Y:F1})");
-
-                    // 🚀 執行您的 Halcon 量測運算
                     ExecuteHalconMeasure(picImage, startPt, endPt);
                 };
 
-                // 建立 Tab 頁面與 Panel 容器
                 TabPage newPage = new TabPage(CameraLocation[i]) { Name = $"{CameraLocation[i]}" };
                 Panel containerPanel = new Panel
                 {
@@ -169,7 +238,7 @@ namespace AlgorithmProcess.Window
                 newPage.Controls.Add(containerPanel);
                 Image_tabControl.TabPages.Add(newPage);
             }
-        }        
+        }
 
         private void SelectAlgorithm_cb_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -188,125 +257,165 @@ namespace AlgorithmProcess.Window
 
             if (btn == DrawLine_btn)
             {
-                // 取得當前畫面上 Tab 顯示的那個 PictureBox
-                if (Image_tabControl.SelectedTab != null && Image_tabControl.SelectedTab.Controls.Count > 0)
+                AdvancedPictureBox currentPic = GetCurrentActivePictureBox();
+                if (currentPic != null)
                 {
-                    Panel panel = Image_tabControl.SelectedTab.Controls[0] as Panel;
-                    if (panel != null && panel.Controls.Count > 0)
-                    {
-                        DrawLinePictureBox currentPic = panel.Controls[0] as DrawLinePictureBox;
-                        if (currentPic != null)
-                        {
-                            // 🎯 啟動劃線模式！此時滑鼠移入會自動變十字準星，按住即可拉卡尺
-                            currentPic.CurrentMouseMode = DrawLinePictureBox.MouseMode.DrawMeasureLine;
-                        }
-                    }
+                    currentPic.CurrentMode = AdvancedPictureBox.InteractionMode.DrawMeasureLine;
+                    CallBackLog?.Invoke("INFO", "表單A：已透過按鈕啟動卡尺劃線模式。");
                 }
-
             }
             else if (btn == Clear_btn)
             {
-                
-
                 CallBackLog?.Invoke("INFO", "量測工具：已清除卡尺線段，圖片還原可移動狀態。");
             }
         }
 
-
-
-        /// <summary>
-        /// 🔧 輔助工具：撈出當前 Image_tabControl 頁籤內正在顯示的 CustomPictureBox
-        /// </summary>
         private void Image_tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Image_tabControl.SelectedTab != null)
-            {
-                currentPictureBox = Image_tabControl.SelectedTab.Controls.OfType<Panel>()
-                    .FirstOrDefault()?.Controls.OfType<CustomPictureBox>().FirstOrDefault();
-            } 
+            currentPictureBox = GetCurrentActivePictureBox();
         }
 
-
-        private HTuple MeasurePosFindPoint(HImage _hImage, double RowStart, double ColStart, double RowEnd, double ColEnd, double RoiWidthLen2, double AmplitudeThreshold, out HTuple _hCol, out HTuple _hAmplitude, out HTuple _hDistance)
+        private HTuple MeasurePosFindPoint(HImage _hImage, double RowStart, double ColStart, double RowEnd, double ColEnd, out HTuple _hCol, out HTuple _hAmplitude, out HTuple _hDistance)
         {
-            HMeasure MsrHandle_Measure_01_1 = new HMeasure();
-            HTuple _hImageWidth = new HTuple(), _hImageHeight = new HTuple();
-
             HTuple _hRow = new HTuple();
             _hCol = new HTuple();
             _hAmplitude = new HTuple();
             _hDistance = new HTuple();
 
-            _hImage.GetImageSize(out _hImageWidth, out _hImageHeight);
+            if (_hImage == null || !_hImage.IsInitialized()) return _hRow;
 
-            double LineRowStart_Measure_01_1 = RowStart;
-            double LineColumnStart_Measure_01_1 = ColStart;
-            double LineRowEnd_Measure_01_1 = RowEnd;
-            double LineColumnEnd_Measure_01_1 = ColEnd;
+            HMeasure MsrHandle_Measure_01_1 = new HMeasure();
 
-            double TmpCtrl_Row = 0.5 * (LineRowStart_Measure_01_1 + LineRowEnd_Measure_01_1);
-            double TmpCtrl_Column = 0.5 * (LineColumnStart_Measure_01_1 + LineColumnEnd_Measure_01_1);
-            double TmpCtrl_Dr = LineRowStart_Measure_01_1 - LineRowEnd_Measure_01_1;
-            double TmpCtrl_Dc = LineColumnEnd_Measure_01_1 - LineColumnStart_Measure_01_1;
+            try
+            {
+                HTuple _hImageWidth, _hImageHeight;
+                _hImage.GetImageSize(out _hImageWidth, out _hImageHeight);
+                CallBackLog?.Invoke("DEBUG", $"[HALCON 影像大小] Width: {_hImageWidth[0].I}, Height: {_hImageHeight[0].I}");
+                CallBackLog?.Invoke("DEBUG", $"[C# 傳入卡尺線] 起點(Col, Row): ({ColStart:F2}, {RowStart:F2}) -> 終點(Col, Row): ({ColEnd:F2}, {RowEnd:F2})");
 
-            double TmpCtrl_Phi = Math.Atan2(TmpCtrl_Dr, TmpCtrl_Dc);
-            double TmpCtrl_Len1 = 0.5 * Math.Sqrt(TmpCtrl_Dr * TmpCtrl_Dr + TmpCtrl_Dc * TmpCtrl_Dc);
-            double TmpCtrl_Len2 = RoiWidthLen2;
+                double TmpCtrl_Row = 0.5 * (RowStart + RowEnd);
+                double TmpCtrl_Column = 0.5 * (ColStart + ColEnd);
 
-            MsrHandle_Measure_01_1.GenMeasureRectangle2(TmpCtrl_Row, TmpCtrl_Column, TmpCtrl_Phi, TmpCtrl_Len1, TmpCtrl_Len2, _hImageWidth[0], _hImageHeight[0], "nearest_neighbor");
-            MsrHandle_Measure_01_1.MeasurePos(_hImage, 1, AmplitudeThreshold, "all", "all", out _hRow, out _hCol, out _hAmplitude, out _hDistance);
+                double TmpCtrl_Dr = RowStart - RowEnd;
+                double TmpCtrl_Dc = ColEnd - ColStart;
+
+                double TmpCtrl_Phi = Math.Atan2(TmpCtrl_Dr, TmpCtrl_Dc);
+
+                double TmpCtrl_Len1 = 0.5 * Math.Sqrt(TmpCtrl_Dr * TmpCtrl_Dr + TmpCtrl_Dc * TmpCtrl_Dc);
+                double TmpCtrl_Len2 = G_ROIWidth;
+
+                CallBackLog?.Invoke("DEBUG", $"[卡尺幾何參數] 中心(Col, Row): ({TmpCtrl_Column:F2}, {TmpCtrl_Row:F2}), 角度(弧度): {TmpCtrl_Phi:F4} (角度: {TmpCtrl_Phi * 180 / Math.PI:F1}°), 半長(Len1): {TmpCtrl_Len1:F2}, 半寬(Len2): {TmpCtrl_Len2:F2}");
+
+                double localSigma = G_Sigma;
+                if (localSigma >= 0.5 * TmpCtrl_Len1)
+                {
+                    localSigma = (0.5 * TmpCtrl_Len1) - 0.05;
+                    if (localSigma < 0.4) localSigma = 0.4;
+
+                    this.BeginInvoke(new Action(() => {
+                        if (!isUpdating)
+                        {
+                            isUpdating = true;
+                            Sigma_numericUpDown.Value = (decimal)localSigma;
+                            Sigma_trackBar.Value = (int)(localSigma * 100.0);
+                            isUpdating = false;
+                        }
+                    }));
+                    CallBackLog?.Invoke("WARN", $"卡尺太短或Sigma過大！已動態調整 Sigma 為安全值: {localSigma:F2}");
+                }
+
+                MsrHandle_Measure_01_1.GenMeasureRectangle2(
+                    TmpCtrl_Row, TmpCtrl_Column, TmpCtrl_Phi,
+                    TmpCtrl_Len1, TmpCtrl_Len2,
+                    _hImageWidth[0], _hImageHeight[0], "nearest_neighbor"
+                );
+
+                string transition = "all";
+                string select = "all";
+
+                this.Invoke(new Action(() => {
+                    transition = Direction_comboBox.SelectedItem?.ToString() ?? "all";
+                    select = Position_comboBox.SelectedItem?.ToString() ?? "all";
+                }));
+
+                MsrHandle_Measure_01_1.MeasurePos(
+                    _hImage,
+                    localSigma,
+                    G_Amplitude,
+                    transition,
+                    select,
+                    out _hRow, out _hCol, out _hAmplitude, out _hDistance
+                );
+
+                if (_hRow != null)
+                {
+                    CallBackLog?.Invoke("DEBUG", $"[HALCON 量測結束] 成功找到邊緣點數量: {_hRow.Length} 個");
+                }
+            }
+            catch (Exception ex)
+            {
+                CallBackLog?.Invoke("ERROR", $"Halcon 卡尺內部運算異常: {ex.Message}");
+            }
+            finally
+            {
+                if (MsrHandle_Measure_01_1.IsInitialized())
+                {
+                    MsrHandle_Measure_01_1.Dispose();
+                }
+            }
 
             return _hRow;
         }
 
-        private void ExecuteHalconMeasure(DrawLinePictureBox picBox, PointF imgStart, PointF imgEnd)
+        private void ExecuteHalconMeasure(AdvancedPictureBox picBox, PointF imgStart, PointF imgEnd)
         {
-            // 檢查目前分頁是否是量測卡尺對應的 Tab
-            if (AlgorithmMethod_tabControl.SelectedTab == null || AlgorithmMethod_tabControl.SelectedTab.Name != "MeasurePos")
+            if (AlgorithmMethod_tabControl.SelectedTab == null || AlgorithmMethod_tabControl.SelectedTab.Name != "MeasurePos") return;
+            if (picBox == null || picBox.Tag == null) return; // 🟢 改為判斷 Tag 是否有路徑
+
+            string targetImagePath = picBox.Tag.ToString();
+            if (!File.Exists(targetImagePath))
             {
+                CallBackLog?.Invoke("ERROR", $"找不到指定路徑之影像檔案: {targetImagePath}");
                 return;
             }
 
-            if (picBox.Image == null) return;
+            CallBackLog?.Invoke("DEBUG", $"[UI 原始點] Start_X(Col): {imgStart.X}, Start_Y(Row): {imgStart.Y}");
+
+            // 宣告於 try 外部以利於 finally 釋放
+            HImage hImage = null;
 
             try
             {
-                HImage hImage = new HImage();
-                // 1. 將 C# Bitmap 轉換為 Halcon 影像物件
-                HC.Bitmap2HImage(picBox.Image as Bitmap, out hImage);
+                picBox.UpdateResultPoints(new List<PointF>());
+
+                // 🟢 核心變更：不再抽取 picBox.Image，直接由路徑讀取最純淨的硬碟檔案至 Halcon
+                hImage = new HImage();
+                hImage.ReadImage(targetImagePath);
 
                 HTuple hCol, hAmplitude, hDistance;
-
-                // 2. 呼叫您原有的卡尺量測函式（直接傳入傳出來的真實影像浮點座標）
-                // 註：Halcon 的 Row對應 Y, Column對應 X
                 HTuple hRow = MeasurePosFindPoint(
                     hImage,
                     imgStart.Y, imgStart.X,
                     imgEnd.Y, imgEnd.X,
-                    10, 40, // 這裡的卡尺寬高參數可依您的實際 UI 欄位調整 (如 txt_RoiWidth.Text)
                     out hCol, out hAmplitude, out hDistance
                 );
 
-                System.Collections.Generic.List<PointF> resultPoints = new System.Collections.Generic.List<PointF>();
-
-                // 🌟 2. 建立一個暫存的 DataTable 結構，用來更新給 DataGridView
+                List<PointF> resultPoints = new List<PointF>();
                 DataTable dtPoints = new DataTable();
                 dtPoints.Columns.Add("No", typeof(int));
-                dtPoints.Columns.Add("Column", typeof(string));
                 dtPoints.Columns.Add("Row", typeof(string));
+                dtPoints.Columns.Add("Column", typeof(string));
 
                 if (hRow != null && hRow.Length > 0)
                 {
                     CallBackLog?.Invoke("INFO", $"Halcon量測成功：找到 {hRow.Length} 個邊緣點。");
 
-                    // 迴圈將 Halcon 座標組裝成 PointF (注意：Halcon 的 Row=Y, Col=X)
                     for (int k = 0; k < hRow.Length; k++)
                     {
                         float y = (float)hRow[k].D;
                         float x = (float)hCol[k].D;
                         resultPoints.Add(new PointF(x, y));
 
-                        // 丟給 DataGridView 顯示用的資料列 (取到小數點後第3位)
                         DataRow row = dtPoints.NewRow();
                         row["No"] = k + 1;
                         row["Column"] = x.ToString("F3");
@@ -314,24 +423,130 @@ namespace AlgorithmProcess.Window
                         dtPoints.Rows.Add(row);
                     }
                 }
+                else
+                {
+                    CallBackLog?.Invoke("WARN", "量測完成，但目前參數配置下未尋找到任何符合的邊緣點。");
+                }
 
-                // 🌟 3. 同步到 UI 執行緒更新控制項
                 this.BeginInvoke(new Action(() =>
                 {
-                    // A. 讓圖片立刻重繪，在影像畫面上釘上紅色 Cross 十字
-                    picBox.UpdateHalconResultPoints(resultPoints);
-
-                    // B. 讓 dataGridView_Point 表格立刻刷出數據
-                    dataGridView_Point.DataSource = dtPoints;
+                    picBox.UpdateResultPoints(resultPoints);
+                    if (dataGridView_Point != null)
+                    {
+                        dataGridView_Point.DataSource = dtPoints;
+                    }
                 }));
-
-                // 4. 記得釋放 Halcon 物件避免記憶體洩漏 (Memory Leak)
-                hImage.Dispose();
             }
             catch (Exception ex)
             {
                 CallBackLog?.Invoke("ERROR", $"卡尺運算過程中發生異常：{ex.Message}");
             }
+            finally
+            {
+                // 🟢 確實釋放 HImage 本體記憶體
+                if (hImage != null && hImage.IsInitialized())
+                {
+                    hImage.Dispose();
+                }
+            }
+        }
+
+        private void TrackBar_Scroll(object sender, EventArgs e)
+        {
+            if (isUpdating) return;
+
+            TrackBar currentTrackBar = sender as TrackBar;
+            if (currentTrackBar == null || currentTrackBar.Tag == null) return;
+
+            ParamBindInfo info = currentTrackBar.Tag as ParamBindInfo;
+
+            isUpdating = true;
+            try
+            {
+                double actualValue = (double)currentTrackBar.Value / info.Scale;
+                info.NumericControl.Value = (decimal)actualValue;
+                UpdateGlobalVariable(info.ParamName, actualValue);
+            }
+            finally
+            {
+                isUpdating = false;
+            }
+        }
+
+        private void NumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (isUpdating) return;
+
+            NumericUpDown currentNum = sender as NumericUpDown;
+            if (currentNum == null || currentNum.Tag == null) return;
+
+            ParamBindInfo info = currentNum.Tag as ParamBindInfo;
+
+            isUpdating = true;
+            try
+            {
+                double actualValue = (double)currentNum.Value;
+                int trackValue = (int)Math.Round(actualValue * info.Scale);
+
+                trackValue = Math.Max(info.TrackControl.Minimum, Math.Min(info.TrackControl.Maximum, trackValue));
+                info.TrackControl.Value = trackValue;
+
+                UpdateGlobalVariable(info.ParamName, actualValue);
+            }
+            finally
+            {
+                isUpdating = false;
+            }
+        }
+
+        private void Direction_Position_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TriggerLiveMeasure();
+        }
+
+        private void UpdateGlobalVariable(string paramName, double value)
+        {
+            switch (paramName)
+            {
+                case "Amplitude": G_Amplitude = value; break;
+                case "Sigma": G_Sigma = value; break;
+                case "ROIWidth": G_ROIWidth = value; break;
+            }
+
+            TriggerLiveMeasure();
+        }
+
+        private void TriggerLiveMeasure()
+        {
+            AdvancedPictureBox currentPic = GetCurrentActivePictureBox();
+
+            // 🟢 修正：此處原本判斷 currentPic.Image != null，現改為檢驗 Tag 中是否有綁定真實路徑
+            if (currentPic != null && currentPic.Tag != null)
+            {
+                // 【防護鎖】如果起點與終點重合（代表使用者根本還沒拉線），直接 Return 阻斷
+                if (currentPic.StartPoint == currentPic.EndPoint ||
+                    (currentPic.StartPoint.X == 0 && currentPic.StartPoint.Y == 0))
+                {
+                    return;
+                }
+
+                ExecuteHalconMeasure(currentPic, currentPic.StartPoint, currentPic.EndPoint);
+            }
+        }
+
+        private AdvancedPictureBox GetCurrentActivePictureBox()
+        {
+            if (Image_tabControl.SelectedTab == null) return null;
+
+            if (Image_tabControl.SelectedTab.Controls.Count > 0)
+            {
+                Panel containerPanel = Image_tabControl.SelectedTab.Controls[0] as Panel;
+                if (containerPanel != null && containerPanel.Controls.Count > 0)
+                {
+                    return containerPanel.Controls[0] as AdvancedPictureBox;
+                }
+            }
+            return null;
         }
     }
 }

@@ -82,6 +82,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\AdvancedPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Base\CustomPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
