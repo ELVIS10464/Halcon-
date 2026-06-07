@@ -32,7 +32,7 @@
             this.dataGridView_Point = new System.Windows.Forms.DataGridView();
             this.No_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Row = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cloumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel_Button = new System.Windows.Forms.TableLayoutPanel();
             this.DrawLine_btn = new System.Windows.Forms.Button();
             this.Clear_btn = new System.Windows.Forms.Button();
@@ -90,7 +90,7 @@
             this.dataGridView_Point.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.No_Name,
             this.Row,
-            this.Cloumn});
+            this.Column});
             this.dataGridView_Point.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView_Point.Location = new System.Drawing.Point(3, 444);
             this.dataGridView_Point.Name = "dataGridView_Point";
@@ -114,12 +114,12 @@
             this.Row.MinimumWidth = 8;
             this.Row.Name = "Row";
             // 
-            // Cloumn
+            // Column
             // 
-            this.Cloumn.DataPropertyName = "Cloumn";
-            this.Cloumn.HeaderText = "Cloumn";
-            this.Cloumn.MinimumWidth = 8;
-            this.Cloumn.Name = "Cloumn";
+            this.Column.DataPropertyName = "Column";
+            this.Column.HeaderText = "Column";
+            this.Column.MinimumWidth = 8;
+            this.Column.Name = "Column";
             // 
             // tableLayoutPanel_Button
             // 
@@ -159,6 +159,7 @@
             this.Clear_btn.TabIndex = 1;
             this.Clear_btn.Text = "Clear";
             this.Clear_btn.UseVisualStyleBackColor = true;
+            this.Clear_btn.Click += new System.EventHandler(this.Btn_Click);
             // 
             // tableLayoutPanel_Extract
             // 
@@ -403,6 +404,6 @@
         private System.Windows.Forms.DataGridView dataGridView_Point;
         private System.Windows.Forms.DataGridViewTextBoxColumn No_Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn Row;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cloumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column;
     }
 }

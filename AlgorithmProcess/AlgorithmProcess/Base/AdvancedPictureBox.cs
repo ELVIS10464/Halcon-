@@ -41,8 +41,8 @@ namespace AlgorithmProcess.Base
 
         // 🌟 6. 卡尺劃線狀態 (記錄於影像像素座標系)
         private bool _isDrawingLine = false;
-        private PointF m_ImgStartPt = PointF.Empty;
-        private PointF m_ImgEndPt = PointF.Empty;
+        public PointF m_ImgStartPt = PointF.Empty;
+        public PointF m_ImgEndPt = PointF.Empty;
 
         // 🌟 7. 新增：Halcon 算出來的演算法結果點，供畫面上釘十字使用
         private List<PointF> m_ResultPoints = new List<PointF>();
