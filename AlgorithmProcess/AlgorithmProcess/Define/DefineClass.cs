@@ -15,7 +15,7 @@ namespace AlgorithmProcess
         public string SaveResultPath = string.Empty;
 
         public int SlotNumber = 0;
-
+        public string SelectedImageItem = string.Empty;
         public string DirImagePath = string.Empty;
     }
 

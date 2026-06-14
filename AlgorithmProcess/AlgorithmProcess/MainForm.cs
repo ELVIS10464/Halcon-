@@ -272,6 +272,8 @@ namespace AlgorithmProcess
             // 2. 取得選取項目的資訊 (根據你塞進 ListBox 的內容調整)
             string selectedImageItem = loadImagefile_lb.SelectedItem.ToString();
 
+            settingInfo.SelectedImageItem = selectedImageItem;
+
             settingInfo.DirImagePath = settingInfo.LoadImagePath + "\\" + selectedImageItem + "\\Image";
 
             OnLogReceived("INFO", $"選擇的影像資料夾: {selectedImageItem}");

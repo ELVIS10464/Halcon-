@@ -341,6 +341,10 @@ namespace AlgorithmProcess.Window
                 nextimage_btn.Visible = (ImageIndex != settingInfo.SlotNumber);
                 lastimage_btn.Visible = true;
             }
+            else
+            {
+                CallBackLog?.Invoke("WARNING", $"已經是第一張或最後一張影像，無法切換");
+            }
         }
 
         private void ShowImage()
@@ -551,7 +555,7 @@ namespace AlgorithmProcess.Window
                 {
                     Directory.CreateDirectory(settingInfo.SaveResultPath + "\\Absence"); // 自動建立多層級資料夾
                 }
-                SavePath = settingInfo.SaveResultPath + "\\Absence\\Slot" + ImageIndex.ToString("D2") + "_";
+                SavePath = settingInfo.SaveResultPath + "\\Absence\\" + settingInfo.SelectedImageItem + "_Slot" + ImageIndex.ToString("D2") + "_";
 
                 CallBackLog?.Invoke("INFO", $"儲存影像類別: Absence");
             }
@@ -561,7 +565,7 @@ namespace AlgorithmProcess.Window
                 {
                     Directory.CreateDirectory(settingInfo.SaveResultPath + "\\Stack"); // 自動建立多層級資料夾
                 }
-                SavePath = settingInfo.SaveResultPath + "\\Stack\\Slot" + ImageIndex.ToString("D2") + "_";
+                SavePath = settingInfo.SaveResultPath + "\\Stack\\" + settingInfo.SelectedImageItem + "_Slot" + ImageIndex.ToString("D2") + "_";
 
                 CallBackLog?.Invoke("INFO", $"儲存影像類別: Stack");
             }
@@ -571,7 +575,7 @@ namespace AlgorithmProcess.Window
                 {
                     Directory.CreateDirectory(settingInfo.SaveResultPath + "\\Presence"); // 自動建立多層級資料夾
                 }
-                SavePath = settingInfo.SaveResultPath + "\\Presence\\Slot" + ImageIndex.ToString("D2") + "_";
+                SavePath = settingInfo.SaveResultPath + "\\Presence\\" + settingInfo.SelectedImageItem + "_Slot" + ImageIndex.ToString("D2") + "_";
 
                 CallBackLog?.Invoke("INFO", $"儲存影像類別: Presence");
             }
@@ -581,7 +585,7 @@ namespace AlgorithmProcess.Window
                 {
                     Directory.CreateDirectory(settingInfo.SaveResultPath + "\\Slant"); // 自動建立多層級資料夾
                 }
-                SavePath = settingInfo.SaveResultPath + "\\Slant\\Slot" + ImageIndex.ToString("D2") + "_";
+                SavePath = settingInfo.SaveResultPath + "\\Slant\\" + settingInfo.SelectedImageItem + "_Slot" + ImageIndex.ToString("D2") + "_";
 
                 CallBackLog?.Invoke("INFO", $"儲存影像類別: Slant");
             }

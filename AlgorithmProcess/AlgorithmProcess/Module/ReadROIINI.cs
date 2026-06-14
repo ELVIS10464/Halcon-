@@ -119,13 +119,13 @@ namespace AlgorithmProcess
                 if (leftCountSlice.Count > 0)
                 {
                     rOIList.TwoCamera.CountSlice.LeftImage_EdgePanel = ConvertToROI(leftCountSlice[0]);
-                    rOIList.TwoCamera.CountSlice.LeftImage_Panel = ConvertToROI(leftCountSlice[1]);
+                    //rOIList.TwoCamera.CountSlice.LeftImage_Panel = ConvertToROI(leftCountSlice[1]);
                 }
 
                 if (rightCountSlice.Count > 0)
                 {
                     rOIList.TwoCamera.CountSlice.RightImage_Panel = ConvertToROI(rightCountSlice[0]);
-                    rOIList.TwoCamera.CountSlice.RightImage_EdgePanel = ConvertToROI(rightCountSlice[1]);
+                    //rOIList.TwoCamera.CountSlice.RightImage_EdgePanel = ConvertToROI(rightCountSlice[1]);
                 }
 
                 // Stack

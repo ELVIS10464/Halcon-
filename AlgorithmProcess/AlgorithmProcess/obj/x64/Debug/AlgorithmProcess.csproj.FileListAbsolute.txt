@@ -22,3 +22,15 @@ C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\Algorithm
 C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.Window.FromParameterSetting_StepDisplay.resources
 C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.Window.FromAlgorithmTest.resources
 C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\obj\x64\Debug\AlgorithmProcess.Window.FromAlgorithmTest_MeasurePos.resources
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\dll\x64\OpenCvSharpExtern.dll
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\dll\x64\opencv_videoio_ffmpeg4130_64.dll
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\OpenCvSharp.dll
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\System.Buffers.dll
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\System.Memory.dll
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\System.Numerics.Vectors.dll
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\OpenCvSharp.xml
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\System.Buffers.xml
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\System.Memory.xml
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\System.Numerics.Vectors.xml
+C:\Users\elvis\Desktop\me\SideProject\Halcon演算法\AlgorithmProcess\AlgorithmProcess\bin\x64\Debug\System.Runtime.CompilerServices.Unsafe.xml
