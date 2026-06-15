@@ -106,6 +106,7 @@
             this.runalgorithm_btn.Text = "Run";
             this.runalgorithm_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.runalgorithm_btn.UseVisualStyleBackColor = false;
+            this.runalgorithm_btn.Click += new System.EventHandler(this.runalgorithm_btn_Click);
             // 
             // runmode_cb
             // 

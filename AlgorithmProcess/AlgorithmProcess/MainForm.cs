@@ -155,6 +155,7 @@ namespace AlgorithmProcess
             fromDisplayResult = new FromDisplayResult();
             fromDisplayResult.Dock = DockStyle.Fill;
             main_panel.Controls.Add(fromDisplayResult);
+            fromDisplayResult.CallBackLog += OnLogReceived;
 
             fromImageCrop = new FromImageCrop();
             fromImageCrop.Dock = DockStyle.Fill;
@@ -279,6 +280,8 @@ namespace AlgorithmProcess
             OnLogReceived("INFO", $"選擇的影像資料夾: {selectedImageItem}");
 
             // 3. *** 關鍵步驟：直接呼叫 UserControl 的公開方法，把路徑丟過去 ***
+            fromDisplayResult.InitializeImageLoad(settingInfo);
+
             fromImageCrop.InitializeImageLoad(settingInfo);
 
             fromParameterSetting.InitializeImageLoad(settingInfo);
